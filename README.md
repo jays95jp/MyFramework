@@ -129,26 +129,26 @@ This framework include below features :
       - maven { url 'https://dl.bintray.com/kevadiyak/MyFramework/' }
   - }
   - dependencies {
-      - ### 1.Common Utils ###
+      - 1.Common Utils 
         - compile 'com.kevadiyak:commonutils:1.0.0@aar'
-      - ### 2. Custom font ###
+      - 2. Custom font 
         - compile 'com.kevadiyak:customfont:1.0.0@aar'
-      - ### 3. MVVM Architecture ###
+      - 3. MVVM Architecture 
         - compile 'com.kevadiyak:mvvmarchitecture:1.0.0@aar'
-      - ### 4. Recycleview Adapter ###
+      - 4. Recycleview Adapter
         - compile 'com.kevadiyak:recycleadapter:1.0.0@aar'
-      - ### 5. Alert/Prompt/Progress Dialog ###
+      - 5. Alert/Prompt/Progress Dialog 
         - compile 'com.kevadiyak:rxdialog:1.0.0@aar'
-      - ### 6. File Picker ###
+      - 6. File Picker
         - compile 'com.kevadiyak:rxfilepicker:1.0.0@aar'
-      - ### 7. Location ###
+      - 7. Location
         - compile 'com.kevadiyak:rxlocation:1.0.0@aar'
-      - ### 8. Permission ###
+      - 8. Permission
         - compile 'com.kevadiyak:rxpermissions:1.0.0@aar'
-      - ### 9. Image Picker ###
+      - 9. Image Picker
         - compile 'com.kevadiyak:rxphotopicker:1.0.0@aar'
-      - ### 10. Preference ###
+      - 10. Preference
         - compile 'com.kevadiyak:rxpreference:1.0.0@aar'
-      - ### 11. Validation ###
+      - 11. Validation
         - compile 'com.kevadiyak:rxvalidation:1.0.0@aar' 
   - }
