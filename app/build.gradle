@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        jcenter()
         mavenCentral()
     }
 
@@ -9,7 +10,9 @@ buildscript {
 }
 
 repositories {
+    jcenter()
     mavenCentral()
+    maven { url 'https://dl.bintray.com/kevadiyak/MyFramework/' }
 }
 
 apply plugin: 'com.android.application'
@@ -25,6 +28,8 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+
+        multiDexEnabled true
     }
 
     dataBinding {
@@ -72,17 +77,37 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':commonutils')
-    compile project(':rxpermissions')
-    compile project(':recycleadapter')
+    /*compile project(':commonutils')
     compile project(':customfont')
+    compile project(':mvvmarchitecture')
+    compile project(':recycleadapter')
     compile project(':rxdialog')
     compile project(':rxfilepicker')
+    compile project(':rxlocation')
+    compile project(':rxpermissions')
     compile project(':rxphotopicker')
     compile project(':rxpreference')
-    compile project(':rxlocation')
-    compile project(':mvvmarchitecture')
-    compile project(':rxvalidation')
+    compile project(':rxvalidation')*/
+
+    compile 'com.kevadiyak:commonutils:1.0.0@aar'
+    compile 'com.kevadiyak:customfont:1.0.0@aar'
+    compile 'com.kevadiyak:mvvmarchitecture:1.0.0@aar'
+    compile 'com.kevadiyak:recycleadapter:1.0.0@aar'
+    compile 'com.kevadiyak:rxdialog:1.0.0@aar'
+    compile 'com.kevadiyak:rxfilepicker:1.0.0@aar'
+    compile 'com.kevadiyak:rxlocation:1.0.0@aar'
+    compile 'com.kevadiyak:rxpermissions:1.0.0@aar'
+    compile 'com.kevadiyak:rxphotopicker:1.0.0@aar'
+    compile 'com.kevadiyak:rxpreference:1.0.0@aar'
+    compile 'com.kevadiyak:rxvalidation:1.0.0@aar'
+
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.google.android.gms:play-services-places:9.6.1'
+    compile 'com.google.android.gms:play-services-location:9.6.1'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.android.support:multidex:1.0.1'
 
     //debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     //releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

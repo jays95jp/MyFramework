@@ -1,6 +1,8 @@
 package com.kevadiyak.myframework.app;
 
-import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.kevadiyak.customfont.CustomFontConfig;
 import com.kevadiyak.myframework.R;
@@ -8,7 +10,7 @@ import com.kevadiyak.myframework.other.font.CustomViewWithTypefaceSupport;
 import com.kevadiyak.myframework.other.font.TextField;
 //import com.squareup.leakcanary.LeakCanary;
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {
@@ -17,6 +19,12 @@ public class MyApplication extends Application {
             return;
         LeakCanary.install(this);*/
         initFont();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        MultiDex.install(this);
     }
 
     public void initFont() {
