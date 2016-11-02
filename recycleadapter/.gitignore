@@ -9,5 +9,6 @@ gradlew
 /build
 /.idea
 /captures
-/app/src/test
+/src/androidTest/
+/src/test/
 .externalNativeBuild
