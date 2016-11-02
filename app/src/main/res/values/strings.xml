@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">MyFramework</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_geofence">Geofence</string>
+    <string name="title_mock_location">Mock Location</string>
+    <string name="title_places">Places</string>
+
+    <string name="hello">Hello</string>
+    <string name="hello_name">Hello, %s!</string>
+    <string name="clear_name_button">Clear name</string>
+    <string name="start_app_button">Start app</string>
+    <string name="hint_enter_name">Enter your name</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="user_email">%s@example.com</string>
+
+    <string name="dialog_title">User Dialog</string>
+    <string name="dialog_message">The only way to close this dialog is by\n pressing one of the following buttons.\n Do you understand?</string>
+    <string name="dialog_cancel">CANCEL</string>
+    <string name="dialog_ok">OK</string>
+
+    <string name="defined_gtw">\nThis is text set by the gtw style.\n</string>
+    <string name="default_theme">\nThis is text set by the default theme fontPath.\n</string>
+    <string name="defined_fontpath_view">\nThis has a font path set to Roboto Bold, on the View.\n</string>
+    <string name="defined_incorrect">\nThis has a fontPath set to a font file that does not exist, it goes back to the default.\n</string>
+    <string name="defined_in_style">\nThis has the font path defined in the style as Roboto Condensed.\n</string>
+    <string name="defined_in_appears_style">\nThis has the font path defined in the Styles TextAppearance as Roboto Condensed.\n</string>
+    <string name="defined_in_appears">\nThis has the font path defined in the Views TextAppearance as Oswald.\n</string>
+    <string name="defined_in_appears_caps">\nThis has the font path defined in the Views TextAppearance as Oswald. textAllCaps is applied.\n</string>
+    <string name="defined_custom_view">\nThis is a custom TextView with Oswald font.\n</string>
+    <string name="defined_view_stub">\nThis is a TextView inflated from a ViewStub.\n</string>
+    <string name="defined_view_stub_font_path">\nThis is a TextView inflated from a ViewStub w/ fontPath declared.\n</string>
+    <string name="checkbox_custom">Custom Oswald checkbox</string>
+    <string name="edit_text_hint">Custom Roboto Bold Hint</string>
+    <string name="custom_view_style_text">\nCustom View Style, taken from a Custom style attribute.\n</string>
+    <string name="button_default">Default Font (show dialog)</string>
+    <string name="button_defined">Bold Button (show toast)</string>
+
+    <string name="txt_home">Today, i am happy to announcements finally release my basic framework for android development to use with latest java feature java8, RxJava RxAndroid and DataBinding.
+        \n\n - this framework included feature is
+        \n 1. MVVM architecture.
+		\n 2. Dialog.
+		\n 3. Photo Picker.
+		\n 4. Font.
+		\n 5. Permission.
+		\n 6. Preference.
+		\n 7. Validation.
+		\n 8. Location.
+		\n 9. File Picker.
+		\n 10. RecycleView Adapter.
+		\n 11. Log-cat.
+		\n 12. Image Compressor.
+		\n 13. Drawable Color Change.
+		\n 14. EventBus</string>
+</resources>

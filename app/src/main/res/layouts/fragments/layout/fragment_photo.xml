@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.kevadiyak.myframework.viewmodels.PhotoFragmentViewModel"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <Button
+                    android:layout_weight="1"
+                    android:text="Gallery with uri"
+                    android:layout_marginRight="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_bg"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:onClick="@{v -> viewModel.onGalleryUri(v)}" />
+
+                <Button
+                    android:layout_weight="1"
+                    android:text="Gallery with bitmap"
+                    android:layout_marginLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_bg"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:onClick="@{v -> viewModel.onGalleryBitmap(v)}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <Button
+                    android:layout_weight="1"
+                    android:text="Gallery with file"
+                    android:layout_marginRight="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_bg"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:onClick="@{v -> viewModel.onGalleryFile(v)}" />
+
+                <Button
+                    android:layout_weight="1"
+                    android:text="Camera with uri"
+                    android:layout_marginLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_bg"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:onClick="@{v -> viewModel.onCameraUri(v)}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <Button
+                    android:layout_weight="1"
+                    android:text="Camera with bitmap"
+                    android:layout_marginRight="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_bg"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:onClick="@{v -> viewModel.onCameraBitmap(v)}" />
+
+                <Button
+                    android:layout_weight="1"
+                    android:text="Camera with file"
+                    android:layout_marginLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_bg"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:onClick="@{v -> viewModel.onCameraFile(v)}" />
+            </LinearLayout>
+
+            <Button
+                android:text="Gallery with multiple uri"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onGalleryMultipleUri(v)}" />
+
+            <Button
+                android:text="Gallery with multiple bitmap"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onGalleryMultipleBitmap(v)}" />
+
+            <Button
+                android:text="Gallery with multiple file"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onGalleryMultipleFile(v)}" />
+
+            <ImageView
+                android:src="@drawable/icon_ppt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView2" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

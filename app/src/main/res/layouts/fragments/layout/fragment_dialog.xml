@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.kevadiyak.myframework.viewmodels.DialogFragmentViewModel"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:text="Prompt with one button &amp; info"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onPromptInfo(v)}" />
+
+            <Button
+                android:text="Prompt with one button &amp; help"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onPromptHelp(v)}" />
+
+            <Button
+                android:text="Prompt with two button &amp; success"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onPromptSuccess(v)}" />
+
+            <Button
+                android:text="Prompt with two button &amp; error"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onPromptWrong(v)}" />
+
+            <Button
+                android:text="Alert with one button &amp; message"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onAlertMsg(v)}"/>
+
+            <Button
+                android:text="Alert with one button &amp; image"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onAlertImage(v)}" />
+
+            <Button
+                android:text="Alert with two button &amp; image-message"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onAlertMsgImage(v)}" />
+
+            <Button
+                android:text="Alert with one button &amp; view"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onAlertView(v)}" />
+
+            <Button
+                android:text="Alert with two button &amp; view"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onAlertViewRes(v)}" />
+
+            <Button
+                android:id="@+id/btn_progress"
+                android:text="Progress Dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:onClick="@{v -> viewModel.onProgress(v)}"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

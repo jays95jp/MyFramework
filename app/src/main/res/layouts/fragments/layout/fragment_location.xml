@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.kevadiyak.myframework.viewmodels.LocationFragmentViewModel"/>
+    </data>
+
+    <ScrollView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Last location"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/last_known_location_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@{viewModel.lastKnownLocation}" />
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Updatable location"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/updated_location_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@{viewModel.updatableLocation}" />
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Address for location"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/address_for_location_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@{viewModel.addressLocation}" />
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Detected activity"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/activity_recent_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@{viewModel.currentActivity}" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>

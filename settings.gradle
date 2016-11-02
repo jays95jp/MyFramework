@@ -1,0 +1,1 @@
+include ':app', ':commonutils', ':rxpermissions', ':recycleadapter', ':customfont', ':rxdialog', ':rxfilepicker', ':rxphotopicker', ':rxpreference', ':rxlocation', ':mvvmarchitecture', ':rxvalidation'

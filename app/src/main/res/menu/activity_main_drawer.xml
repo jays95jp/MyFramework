@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_permission"
+            android:title="Permission" />
+        <item
+            android:id="@+id/nav_photo"
+            android:title="Photo Picker" />
+        <item
+            android:id="@+id/nav_dialog"
+            android:title="Dialog" />
+        <item
+            android:id="@+id/nav_custom_font"
+            android:title="Custom Font" />
+        <item
+            android:id="@+id/nav_location"
+            android:title="Location" />
+        <item
+            android:id="@+id/nav_preference"
+            android:title="Preference" />
+        <item
+            android:id="@+id/nav_validation"
+            android:title="Validation" />
+        <item
+            android:id="@+id/nav_file"
+            android:title="File Picker" />
+        <item
+            android:id="@+id/nav_other"
+            android:title="Other Util" />
+        <item
+            android:id="@+id/nav_adapter"
+            android:title="Adapter" />
+    </group>
+
+</menu>
