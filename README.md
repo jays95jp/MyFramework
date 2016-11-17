@@ -35,7 +35,7 @@ This framework include below features :
 * you can pick image from GALLERY or CAMERA with three type of transformers like URI, BITMAP and FILE.
 * there are two type of Gallery image pick single and multiple with max limit.
 * also it's handle the drive/google photo pick.
-* Code
+* Code :-
 ```groovy
 //add dependencies for app level build.gradle
 dependencies {
@@ -53,7 +53,7 @@ dependencies {
        Uri/*Set argument based on your transformers for example Transformers.URI to Uri, Transformers.BITMAP to Bitmap*/>(){
          @Override
          public void onPhotoResult(Uri uri) {
-           //here is you output based on Transformers Like URI, BITMAP or FILE.
+           //here is your output based on Transformers Like URI, BITMAP or FILE.
          }
        }, 
        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) /*[Option param] this param only use when you have pick image as a file format*/);
@@ -66,13 +66,39 @@ dependencies {
        /*Set argument based on your transformers for example Transformers.URI to Uri, Transformers.BITMAP to Bitmap*/>>() { 
         @Override
         public void onPhotoResult(List<Uri> uri) {
-          //here is you output based on Transformers Like URI, BITMAP or FILE.
+          //here is your output based on Transformers Like URI, BITMAP or FILE.
         }
      }, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
 ```
 ### 4. Permission
 * you can directly use with two line of code, no additional code required like onRequestPermissionsResult or check the granted or not.
-
+* Code :-
+```groovy
+//add dependencies for app level build.gradle
+dependencies {
+  compile 'com.kevadiyak:rxpermissions:1.0.0@aar'
+}
+```
+```java
+// - Single
+   RxPermissions
+    .getInstance(context)
+    .checkMPermission(new PermissionResult() {
+       @Override
+       public void onPermissionResult(String permission, boolean granted) {
+         //here is your permission list by comma separate and result of granted or not.
+       }
+    }, Manifest.permission.CAMERA);
+// - Multiple
+   RxPermissions
+    .getInstance(context)
+    .checkMPermission(new PermissionResult() {
+        @Override
+        public void onPermissionResult(String permission, boolean granted) {
+          //here is your permission list by comma separate and result of granted or not.
+        }
+     }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+```
 ### 5. Custom Font
 * in this feature you can directly set custom font with using set application level default, set layout based on attribute, set particular class based and style based.
   
@@ -92,6 +118,68 @@ dependencies {
 ### 9. File Picker
 * you can pick file from particular DIR and also apply a group of file extension for example you will pick PPT{ppt, pptx}, DOC{doc, docx, dot, dotx}.
 * you can select/pick multiple files from particular DIR with max file counter limit.
+* Code :-
+```groovy
+//add dependencies for app level build.gradle
+dependencies {
+  compile 'com.kevadiyak:rxfilepicker:1.0.0@aar'
+}
+```
+```xml
+<style name="FilePickerTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+</style>
+```    
+```java
+   private int MAX_ATTACHMENT_COUNT = 5;
+   private ArrayList<FileType> fileTypes;
+   fileTypes = new ArrayList<>();
+        FileType fileType = new FileType();
+        fileType.setGroupTitle("PDF");
+        fileType.setGroupIcon(R.drawable.ic_pdf);
+        fileType.setGroupExtension("pdf");
+        fileTypes.add(fileType);
+
+        fileType = new FileType();
+        fileType.setGroupTitle("PPT");
+        fileType.setGroupIcon(R.drawable.icon_ppt);
+        fileType.setGroupExtension("ppt,pptx");
+        fileTypes.add(fileType);
+
+        fileType = new FileType();
+        fileType.setGroupTitle("DOC");
+        fileType.setGroupIcon(R.drawable.ic_doc);
+        fileType.setGroupExtension("doc,docx,dot,dotx");
+        fileTypes.add(fileType);
+
+        fileType = new FileType();
+        fileType.setGroupTitle("XLS");
+        fileType.setGroupIcon(R.drawable.ic_xls);
+        fileType.setGroupExtension("xls,xlsx");
+        fileTypes.add(fileType);
+
+        fileType = new FileType();
+        fileType.setGroupTitle("TXT");
+        fileType.setGroupIcon(R.drawable.ic_txt);
+        fileType.setGroupExtension("txt");
+        fileTypes.add(fileType);
+        
+   RxFilePicker
+    .getInstance(activity)
+    .setMaxCount(MAX_ATTACHMENT_COUNT)
+    .setFileType(fileTypes)
+    .setDirectory(Environment.getExternalStorageDirectory())
+    .setActivityTheme(R.style.FilePickerTheme)
+    .pickDocument(activity, new RxFilePicker.FileResult() {
+        @Override
+        public void PickFileList(ArrayList<String> list) {
+             Log.e("Files", list.toString());
+        }
+    });
+```
 
 ### 10. RecycleView Adapter
 * in this feature you can create adapter with any type of data using single line of code.
