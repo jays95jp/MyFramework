@@ -21,29 +21,43 @@ public class WeakReferenceOnListChangedCallback extends ObservableList.OnListCha
 
     @Override
     public void onChanged(ObservableList<Object> observableList) {
-        new Handler(Looper.getMainLooper()).post(() -> get().notifyDataSetChanged());
+        new Handler(Looper.getMainLooper()).post(() -> {
+            if(get() != null)
+                get().notifyDataSetChanged();
+        });
     }
 
     @Override
     public void onItemRangeChanged(ObservableList<Object> observableList, int from, int count) {
-        new Handler(Looper.getMainLooper()).post(() -> get().notifyItemRangeChanged(from, count));
+        new Handler(Looper.getMainLooper()).post(() -> {
+            if(get() != null)
+                get().notifyItemRangeChanged(from, count);
+        });
     }
 
     @Override
     public void onItemRangeInserted(ObservableList<Object> observableList, int from, int count) {
-        new Handler(Looper.getMainLooper()).post(() -> get().notifyItemRangeInserted(from, count));
+        new Handler(Looper.getMainLooper()).post(() -> {
+            if(get() != null)
+                get().notifyItemRangeInserted(from, count);
+        });
     }
 
     @Override
     public void onItemRangeMoved(ObservableList<Object> observableList, int from, int to, int count) {
         new Handler(Looper.getMainLooper()).post(() -> {
-            for (int i=0; i<count-1; i++)
-                get().notifyItemMoved(from+i, to+i);
+            if(get() != null) {
+                for (int i=0; i<count-1; i++)
+                    get().notifyItemMoved(from + i, to + i);
+            }
         });
     }
 
     @Override
     public void onItemRangeRemoved(ObservableList<Object> observableList, int from, int count) {
-        new Handler(Looper.getMainLooper()).post(() -> get().notifyItemRangeRemoved(from, count));
+        new Handler(Looper.getMainLooper()).post(() -> {
+            if(get() != null)
+                get().notifyItemRangeRemoved(from, count);
+        });
     }
 }
