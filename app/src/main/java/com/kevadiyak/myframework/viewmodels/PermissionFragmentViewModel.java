@@ -75,7 +75,8 @@ public class PermissionFragmentViewModel extends BaseViewModel {
                         setMessage("Permission -> " + permission + ", granted - > " + granted);
                         logs.error("Ensure Permission", "Permission -> " + permission + ", granted - > " + granted);
                     }
-                }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA);
     }
 
     public void onEnsureEach(View view) {
@@ -86,6 +87,7 @@ public class PermissionFragmentViewModel extends BaseViewModel {
                         setMessage("Permission -> " + permission + ", granted - > " + granted);
                         logs.error("Ensure Each Permission", "Permission -> " + permission + ", granted - > " + granted);
                     }
-                }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA);
     }
 }

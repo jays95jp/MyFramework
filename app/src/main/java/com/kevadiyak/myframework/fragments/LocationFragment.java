@@ -157,8 +157,16 @@ public class LocationFragment extends NavigatingMvvmFragment<LocationNavigator, 
         menu.add("Geofencing").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                getViewModel().onStartGeofenceActivity();
-                //getNavigator().navigateToGeofence();
+                RxPermissions.getInstance(getActivity())
+                        .checkMEachPermission(new PermissionResult() {
+                            @Override
+                            public void onPermissionResult(String permission, boolean granted) {
+                                if(granted) {
+                                    getViewModel().onStartGeofenceActivity();
+                                    //getNavigator().navigateToGeofence();
+                                }
+                            }
+                        }, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
                 return true;
             }
         });
@@ -168,8 +176,16 @@ public class LocationFragment extends NavigatingMvvmFragment<LocationNavigator, 
                 if (TextUtils.isEmpty(getString(R.string.API_KEY))) {
                     Toast.makeText(getActivity(), "First you need to configure your API Key - see README.md", Toast.LENGTH_SHORT).show();
                 } else {
-                    getViewModel().onStartPlacesActivity();
-                    //getNavigator().navigateToPlaces();
+                    RxPermissions.getInstance(getActivity())
+                            .checkMEachPermission(new PermissionResult() {
+                                @Override
+                                public void onPermissionResult(String permission, boolean granted) {
+                                    if(granted) {
+                                        getViewModel().onStartPlacesActivity();
+                                        //getNavigator().navigateToPlaces();
+                                    }
+                                }
+                            }, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
                 }
                 return true;
             }
@@ -177,8 +193,16 @@ public class LocationFragment extends NavigatingMvvmFragment<LocationNavigator, 
         menu.add("Mock Locations").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                getViewModel().onStartMockLocationActivity();
-                //getNavigator().navigateToMockLocation();
+                RxPermissions.getInstance(getActivity())
+                        .checkMEachPermission(new PermissionResult() {
+                            @Override
+                            public void onPermissionResult(String permission, boolean granted) {
+                                if(granted) {
+                                    getViewModel().onStartMockLocationActivity();
+                                    //getNavigator().navigateToMockLocation();
+                                }
+                            }
+                        }, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
                 return true;
             }
         });

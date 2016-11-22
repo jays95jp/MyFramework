@@ -64,19 +64,19 @@ public class ItemTouchHelperCallback extends ItemTouchHelperExtension.Callback {
             if(direction == ItemTouchHelperExtension.START) {
                 if(holder.getStartContentView() != null) {
                     view = holder.getStartContentView();
-                    if(view != null && view.getVisibility() == View.INVISIBLE)
-                        view.setVisibility(View.VISIBLE);
+                    /*if(view != null && view.getVisibility() == View.INVISIBLE)
+                        view.setVisibility(View.VISIBLE);*/
                 }
-                if(holder.getEndContentView() != null && holder.getEndContentView().getVisibility() == View.VISIBLE)
-                    holder.getEndContentView().setVisibility(View.INVISIBLE);
+                /*if(holder.getEndContentView() != null && holder.getEndContentView().getVisibility() == View.VISIBLE)
+                    holder.getEndContentView().setVisibility(View.INVISIBLE);*/
             } else {
                 if(holder.getEndContentView() != null) {
                     view = holder.getEndContentView();
-                    if(view != null && view.getVisibility() == View.INVISIBLE)
-                        view.setVisibility(View.VISIBLE);
-                    if(holder.getStartContentView() != null && holder.getStartContentView().getVisibility() == View.VISIBLE)
-                        holder.getStartContentView().setVisibility(View.INVISIBLE);
+                    /*if(view != null && view.getVisibility() == View.INVISIBLE)
+                        view.setVisibility(View.VISIBLE);*/
                 }
+                /*if(holder.getStartContentView() != null && holder.getStartContentView().getVisibility() == View.VISIBLE)
+                    holder.getStartContentView().setVisibility(View.INVISIBLE);*/
             }
 
             if (view != null && dX < -view.getWidth())
