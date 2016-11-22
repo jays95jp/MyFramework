@@ -230,7 +230,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyak:rxfilepicker:1.0.0@aar'
+  compile 'com.kevadiyak:rxfilepicker:1.0.1@aar'
 }
 ```
 ```xml
@@ -323,9 +323,9 @@ dependencies {
     compile 'com.kevadiyak:commonutils:1.0.0@aar' /* Common Utils */
     compile 'com.kevadiyak:customfont:1.0.0@aar' /* Custom font */
     compile 'com.kevadiyak:mvvmarchitecture:1.0.0@aar' /* MVVM Architecture */
-    compile 'com.kevadiyak:recycleadapter:1.0.0@aar' /* Recycleview Adapter */
+    compile 'com.kevadiyak:recycleadapter:1.0.1@aar' /* Recycleview Adapter */
     compile 'com.kevadiyak:rxdialog:1.0.0@aar' /* Alert/Prompt/Progress Dialog */
-    compile 'com.kevadiyak:rxfilepicker:1.0.0@aar' /* File Picker */
+    compile 'com.kevadiyak:rxfilepicker:1.0.1@aar' /* File Picker */
     compile 'com.kevadiyak:rxlocation:1.0.0@aar' /* Location */
     compile 'com.kevadiyak:rxpermissions:1.0.0@aar' /* Runtime Permission */
     compile 'com.kevadiyak:rxphotopicker:1.0.0@aar' /* Photo/Image Picker */
