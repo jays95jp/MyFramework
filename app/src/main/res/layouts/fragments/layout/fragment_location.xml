@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.kevadiyak.myframework.viewmodels.LocationFragmentViewModel"/>
+            type="com.kevadiyakrunalk.myframework.viewmodels.LocationFragmentViewModel"/>
     </data>
 
     <ScrollView

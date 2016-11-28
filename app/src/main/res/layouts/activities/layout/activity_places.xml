@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.kevadiyak.myframework.other.location.viewmodels.PlacesViewModel" />
+            type="com.kevadiyakrunalk.myframework.other.location.viewmodels.PlacesViewModel" />
     </data>
 
     <LinearLayout

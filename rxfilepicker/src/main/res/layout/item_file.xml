@@ -39,7 +39,7 @@
         android:text="1.2MB" />
 
 
-    <com.kevadiyak.rxfilepicker.views.SmoothCheckBox
+    <com.kevadiyakrunalk.rxfilepicker.views.SmoothCheckBox
         android:id="@+id/checkbox"
         android:layout_width="25dp"
         android:layout_height="25dp"

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kevadiyak.rxlocation">
+    package="com.kevadiyakrunalk.rxlocation">
 
     <application
         android:allowBackup="true"

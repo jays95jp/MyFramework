@@ -20,10 +20,10 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "com.kevadiyak.myframework"
+        applicationId "com.kevadiyakrunalk.myframework"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
@@ -77,7 +77,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    /*compile project(':commonutils')
+    compile project(':commonutils')
     compile project(':customfont')
     compile project(':mvvmarchitecture')
     compile project(':recycleadapter')
@@ -87,9 +87,9 @@ dependencies {
     compile project(':rxpermissions')
     compile project(':rxphotopicker')
     compile project(':rxpreference')
-    compile project(':rxvalidation')*/
+    compile project(':rxvalidation')
 
-    compile 'com.kevadiyak:commonutils:1.0.0@aar'
+    /*compile 'com.kevadiyak:commonutils:1.0.0@aar'
     compile 'com.kevadiyak:customfont:1.0.0@aar'
     compile 'com.kevadiyak:mvvmarchitecture:1.0.0@aar'
     compile 'com.kevadiyak:recycleadapter:1.0.1@aar'
@@ -101,12 +101,12 @@ dependencies {
     compile 'com.kevadiyak:rxpreference:1.0.0@aar'
     compile 'com.kevadiyak:rxvalidation:1.0.0@aar'
 
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.google.android.gms:play-services-places:9.6.1'
-    compile 'com.google.android.gms:play-services-location:9.6.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.google.android.gms:play-services-places:10.0.0'
+    compile 'com.google.android.gms:play-services-location:10.0.0'
     compile 'io.reactivex:rxjava:1.2.0'
-    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxandroid:1.2.0'*/
     //compile 'io.reactivex.rxjava2:rxjava:2.0.0'
     //compile 'io.reactivex.rxjava2:rxandroid:2.0.0'
     //compile 'com.android.support:multidex:1.0.1'

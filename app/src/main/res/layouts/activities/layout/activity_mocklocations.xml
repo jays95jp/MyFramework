@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.kevadiyak.myframework.other.location.viewmodels.MockLocationViewModel" />
+            type="com.kevadiyakrunalk.myframework.other.location.viewmodels.MockLocationViewModel" />
     </data>
 
     <LinearLayout

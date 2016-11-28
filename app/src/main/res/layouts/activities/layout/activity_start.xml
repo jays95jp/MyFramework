@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.kevadiyak.myframework.viewmodels.StartViewModel" />
+            type="com.kevadiyakrunalk.myframework.viewmodels.StartViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

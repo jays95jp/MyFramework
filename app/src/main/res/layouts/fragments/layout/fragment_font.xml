@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.kevadiyak.myframework.viewmodels.FontFragmentViewModel"/>
+            type="com.kevadiyakrunalk.myframework.viewmodels.FontFragmentViewModel"/>
     </data>
 
     <ScrollView
@@ -69,13 +69,13 @@
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.FontPathView"/>
 
-            <com.kevadiyak.myframework.other.font.CustomTextView
+            <com.kevadiyakrunalk.myframework.other.font.CustomTextView
                 fontPath="fonts/Oswald-Stencbab.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/defined_custom_view"/>
 
-            <com.kevadiyak.myframework.other.font.CustomViewWithTypefaceSupport
+            <com.kevadiyakrunalk.myframework.other.font.CustomViewWithTypefaceSupport
                 fontPath="fonts/Oswald-Stencbab.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -109,7 +109,7 @@
                 android:layout_marginTop="16dp"
                 android:hint="@string/edit_text_hint"/>
 
-            <com.kevadiyak.myframework.other.font.TextField
+            <com.kevadiyakrunalk.myframework.other.font.TextField
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/custom_view_style_text"/>

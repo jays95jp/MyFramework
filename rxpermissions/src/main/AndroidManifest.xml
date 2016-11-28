@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kevadiyak.rxpermissions">
+    package="com.kevadiyakrunalk.rxpermissions">
 
     <application
         android:allowBackup="true"
@@ -7,7 +7,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".PermissionActivity"
+            android:name="com.kevadiyakrunalk.rxpermissions.PermissionActivity"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 

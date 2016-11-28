@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.kevadiyak.myframework">
+    package="com.kevadiyakrunalk.myframework">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -20,9 +20,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme.NoActionBar"
-        android:name=".app.MyApplication">
+        android:name="com.kevadiyakrunalk.myframework.app.MyApplication">
 
-        <activity android:name=".activities.StartActivity">
+        <activity android:name="com.kevadiyakrunalk.myframework.activities.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,28 +30,28 @@
         </activity>
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.kevadiyakrunalk.myframework.activities.MainActivity"
             android:label="@string/title_activity_main">
         </activity>
 
         <activity
-            android:name=".other.location.activities.MockLocationsActivity"
+            android:name="com.kevadiyakrunalk.myframework.other.location.activities.MockLocationsActivity"
             android:label="@string/title_mock_location">
         </activity>
 
-        <activity android:name=".other.location.activities.GeofenceActivity"
+        <activity android:name="com.kevadiyakrunalk.myframework.other.location.activities.GeofenceActivity"
             android:label="@string/title_geofence">
         </activity>
 
-        <activity android:name=".other.location.activities.PlacesResultActivity"
+        <activity android:name="com.kevadiyakrunalk.myframework.other.location.activities.PlacesResultActivity"
             android:label="@string/title_places">
         </activity>
 
-        <activity android:name=".other.location.activities.PlacesActivity"
+        <activity android:name="com.kevadiyakrunalk.myframework.other.location.activities.PlacesActivity"
             android:label="@string/title_places">
         </activity>
 
-        <receiver android:name=".other.location.GeofenceBroadcastReceiver" />
+        <receiver android:name="com.kevadiyakrunalk.myframework.other.location.GeofenceBroadcastReceiver" />
 
     </application>
 

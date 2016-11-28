@@ -14,7 +14,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         minSdkVersion 16
@@ -34,14 +34,15 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'io.reactivex:rxjava:1.2.0'
     compile 'io.reactivex:rxandroid:1.2.0'
-    compile 'com.android.support:support-annotations:25.0.0'
-    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:support-annotations:25.0.1'
+    compile 'com.android.support:support-v4:25.0.1'
 }
 
 ext {
-    PUBLISH_GROUP_ID = 'com.kevadiyak'
+    PUBLISH_GROUP_ID = 'com.kevadiyakrunalk'
     PUBLISH_ARTIFACT_ID = 'commonutils'
-    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_VERSION = '1.0'
 }
 
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-jar.gradle'
+//apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.kevadiyak.myframework.viewmodels.PhotoFragmentViewModel"/>
+            type="com.kevadiyakrunalk.myframework.viewmodels.PhotoFragmentViewModel"/>
     </data>
 
     <ScrollView
