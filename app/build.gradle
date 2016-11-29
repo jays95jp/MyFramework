@@ -12,7 +12,7 @@ buildscript {
 repositories {
     jcenter()
     mavenCentral()
-    //maven { url 'https://dl.bintray.com/kevadiyak/MyFramework/' }
+    maven { url 'https://dl.bintray.com/kevadiyakrunalk/MyFramework/' }
 }
 
 apply plugin: 'com.android.application'
@@ -48,10 +48,6 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError false
-    }
-
     sourceSets {
         main {
             manifest.srcFile 'src/main/AndroidManifest.xml'
@@ -73,11 +69,16 @@ android {
                     ]
         }
     }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':commonutils')
+    /*compile project(':commonutils')
     compile project(':customfont')
     compile project(':mvvmarchitecture')
     compile project(':recycleadapter')
@@ -87,26 +88,27 @@ dependencies {
     compile project(':rxpermissions')
     compile project(':rxphotopicker')
     compile project(':rxpreference')
-    compile project(':rxvalidation')
+    compile project(':rxvalidation')*/
 
-    /*compile 'com.kevadiyak:commonutils:1.0.0@aar'
-    compile 'com.kevadiyak:customfont:1.0.0@aar'
-    compile 'com.kevadiyak:mvvmarchitecture:1.0.0@aar'
-    compile 'com.kevadiyak:recycleadapter:1.0.1@aar'
-    compile 'com.kevadiyak:rxdialog:1.0.0@aar'
-    compile 'com.kevadiyak:rxfilepicker:1.0.1@aar'
-    compile 'com.kevadiyak:rxlocation:1.0.0@aar'
-    compile 'com.kevadiyak:rxpermissions:1.0.0@aar'
-    compile 'com.kevadiyak:rxphotopicker:1.0.0@aar'
-    compile 'com.kevadiyak:rxpreference:1.0.0@aar'
-    compile 'com.kevadiyak:rxvalidation:1.0.0@aar'
+    compile 'com.kevadiyakrunalk:commonutils:1.0'
+    compile 'com.kevadiyakrunalk:customfont:1.0'
+    compile 'com.kevadiyakrunalk:mvvmarchitecture:1.0'
+    compile 'com.kevadiyakrunalk:recycleadapter:1.0'
+    compile 'com.kevadiyakrunalk:rxdialog:1.0'
+    compile 'com.kevadiyakrunalk:rxfilepicker:1.0'
+    compile 'com.kevadiyakrunalk:rxlocation:1.0'
+    compile 'com.kevadiyakrunalk:rxpermissions:1.0'
+    compile 'com.kevadiyakrunalk:rxphotopicker:1.0'
+    compile 'com.kevadiyakrunalk:rxpreference:1.0'
+    compile 'com.kevadiyakrunalk:rxvalidation:1.0'
 
-    compile 'com.android.support:appcompat-v7:25.0.1'
+    /*compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.google.android.gms:play-services-places:10.0.0'
     compile 'com.google.android.gms:play-services-location:10.0.0'
     compile 'io.reactivex:rxjava:1.2.0'
     compile 'io.reactivex:rxandroid:1.2.0'*/
+
     //compile 'io.reactivex.rxjava2:rxjava:2.0.0'
     //compile 'io.reactivex.rxjava2:rxandroid:2.0.0'
     //compile 'com.android.support:multidex:1.0.1'

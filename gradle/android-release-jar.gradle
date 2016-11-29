@@ -18,6 +18,7 @@ android.libraryVariants.all { variant ->
 }
 
 task androidJavadocs(type: Javadoc) {
+    failOnError false // add this line
     source = android.sourceSets.main.java.srcDirs
     ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
     classpath += files(ext.androidJar)
