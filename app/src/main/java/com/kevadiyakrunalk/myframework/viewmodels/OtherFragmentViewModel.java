@@ -60,7 +60,7 @@ public class OtherFragmentViewModel extends BaseViewModel {
                 public void onPermissionResult(String permission, boolean granted) {
                     if(granted) {
                         RxPhotoPicker.getInstance(context)
-                                .pickSingleImage(Sources.GALLERY, Transformers.FILE, new PhotoInterface<File>() {
+                                .pickSingleImage(Sources.GALLERY, Transformers.FILE, false, new PhotoInterface<File>() {
                                     @Override
                                     public void onPhotoResult(File file) {
                                         logs.error("gallery", "File -> " + (file.length()/1024) + " KB");
@@ -81,7 +81,7 @@ public class OtherFragmentViewModel extends BaseViewModel {
             }, Manifest.permission.READ_EXTERNAL_STORAGE);
         } else {
             RxPhotoPicker.getInstance(context)
-                    .pickSingleImage(Sources.GALLERY, Transformers.FILE, new PhotoInterface<File>() {
+                    .pickSingleImage(Sources.GALLERY, Transformers.FILE, false, new PhotoInterface<File>() {
                         @Override
                         public void onPhotoResult(File file) {
                             logs.error("gallery", "File -> " + (file.length()/1024) + " KB");

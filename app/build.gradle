@@ -78,7 +78,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    /*compile project(':commonutils')
+    compile project(':commonutils')
     compile project(':customfont')
     compile project(':mvvmarchitecture')
     compile project(':recycleadapter')
@@ -88,9 +88,9 @@ dependencies {
     compile project(':rxpermissions')
     compile project(':rxphotopicker')
     compile project(':rxpreference')
-    compile project(':rxvalidation')*/
+    compile project(':rxvalidation')
 
-    compile 'com.kevadiyakrunalk:commonutils:1.0'
+    /*compile 'com.kevadiyakrunalk:commonutils:1.0'
     compile 'com.kevadiyakrunalk:customfont:1.0'
     compile 'com.kevadiyakrunalk:mvvmarchitecture:1.0'
     compile 'com.kevadiyakrunalk:recycleadapter:1.0'
@@ -100,7 +100,7 @@ dependencies {
     compile 'com.kevadiyakrunalk:rxpermissions:1.0'
     compile 'com.kevadiyakrunalk:rxphotopicker:1.0'
     compile 'com.kevadiyakrunalk:rxpreference:1.0'
-    compile 'com.kevadiyakrunalk:rxvalidation:1.0'
+    compile 'com.kevadiyakrunalk:rxvalidation:1.0'*/
 
     /*compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'

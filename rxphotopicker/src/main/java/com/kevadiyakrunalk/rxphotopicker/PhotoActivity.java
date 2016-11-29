@@ -8,9 +8,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 //import com.mylibrary.common.FileUtil;
 import com.kevadiyakrunalk.commonutils.common.FileUtil;
+import com.yalantis.ucrop.UCrop;
+
 import java.util.ArrayList;
 
 /**
@@ -18,6 +21,7 @@ import java.util.ArrayList;
  */
 public class PhotoActivity extends Activity {
     private static final String KEY_CAMERA_PICTURE_URL = "cameraPictureUrl";
+    private static final String KEY_CROP_PICTURE_URL = "cropPictureUrl";
 
     /**
      * The constant IMAGE_SOURCE.
@@ -27,8 +31,9 @@ public class PhotoActivity extends Activity {
      * The constant ALLOW_MULTIPLE_IMAGES.
      */
     public static final String ALLOW_MULTIPLE_IMAGES = "allow_multiple_images";
+    public static final String ALLOW_IMAGE_CROP = "allow_image_crop";
 
-    private Uri cameraPictureUrl;
+    private Uri cameraPictureUrl, cropPictureUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class PhotoActivity extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(KEY_CAMERA_PICTURE_URL, cameraPictureUrl);
+        outState.putParcelable(KEY_CROP_PICTURE_URL, cropPictureUrl);
         super.onSaveInstanceState(outState);
     }
 
@@ -48,6 +54,7 @@ public class PhotoActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         cameraPictureUrl = savedInstanceState.getParcelable(KEY_CAMERA_PICTURE_URL);
+        cropPictureUrl = savedInstanceState.getParcelable(KEY_CROP_PICTURE_URL);
     }
 
     @Override
@@ -63,11 +70,32 @@ public class PhotoActivity extends Activity {
                     handleGalleryResult(data);
                     break;
                 case Constant.TAKE_PHOTO:
-                    RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(cameraPictureUrl);
+                    handleCameraResult(cameraPictureUrl);
+                    break;
+
+                case UCrop.REQUEST_CROP:
+                    Uri resultUri = UCrop.getOutput(data);
+                    RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(resultUri);
+                    finish();
                     break;
             }
+        } else {
+            if(requestCode == UCrop.REQUEST_CROP) {
+                Log.e("Error", "Ucrop");
+                Throwable cropError = UCrop.getError(data);
+                cropError.printStackTrace();
+            }
+            finish();
         }
-        finish();
+    }
+
+    private void handleCameraResult(Uri cameraPictureUrl) {
+        if(getIntent().getBooleanExtra(ALLOW_IMAGE_CROP, false)) {
+            cropPictureUrl = FileUtil.getInstance(getApplicationContext()).createImageUri();
+            UCrop.of(cameraPictureUrl, cropPictureUrl)
+                    .start(this);
+        } else
+            RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(cameraPictureUrl);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -85,7 +113,12 @@ public class PhotoActivity extends Activity {
             }
             RxPhotoPicker.getInstance(getApplicationContext()).onImagesPicked(imageUris);
         } else {
-            RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(data.getData());
+            if(getIntent().getBooleanExtra(ALLOW_IMAGE_CROP, false)) {
+                cropPictureUrl = FileUtil.getInstance(getApplicationContext()).createImageUri();
+                UCrop.of(data.getData(), cropPictureUrl)
+                        .start(this);
+            } else
+                RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(data.getData());
         }
     }
 

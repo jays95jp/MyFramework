@@ -67,9 +67,9 @@ public class RxPhotoPicker {
      * @param imageSource the image source
      * @return the observable
      */
-    public Observable<Uri> requestImage(Sources imageSource) {
+    public Observable<Uri> requestImage(Sources imageSource, boolean allowImageCrop) {
         publishSubject = PublishSubject.create();
-        startImagePickPhotoActivity(imageSource.ordinal(), false);
+        startImagePickPhotoActivity(imageSource.ordinal(), false, allowImageCrop);
         return publishSubject;
     }
 
@@ -81,7 +81,7 @@ public class RxPhotoPicker {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public Observable<List<Uri>> requestMultipleImages() {
         publishSubjectMultipleImages = PublishSubject.create();
-        startImagePickPhotoActivity(Sources.GALLERY.ordinal(), true);
+        startImagePickPhotoActivity(Sources.GALLERY.ordinal(), true, false);
         return publishSubjectMultipleImages;
     }
 
@@ -109,10 +109,11 @@ public class RxPhotoPicker {
         }
     }
 
-    private void startImagePickPhotoActivity(int imageSource, boolean allowMultipleImages) {
+    private void startImagePickPhotoActivity(int imageSource, boolean allowMultipleImages, boolean allowImageCrop) {
         Intent intent = new Intent(context, PhotoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(PhotoActivity.ALLOW_MULTIPLE_IMAGES, allowMultipleImages);
+        intent.putExtra(PhotoActivity.ALLOW_IMAGE_CROP, allowImageCrop);
         intent.putExtra(PhotoActivity.IMAGE_SOURCE, imageSource);
         context.startActivity(intent);
     }
@@ -127,9 +128,9 @@ public class RxPhotoPicker {
      */
     //User use to activity
     @SuppressWarnings({"Convert2MethodRef", "unchecked"})
-    public void pickSingleImage(Sources sources, Transformers transformers, PhotoInterface result, File... filePathDir) {
+    public void pickSingleImage(Sources sources, Transformers transformers, boolean allowImageCrop, PhotoInterface result, File... filePathDir) {
         if (transformers == Transformers.FILE) {
-            requestImage(sources)
+            requestImage(sources, allowImageCrop)
                     .flatMap(new Func1<Uri, Observable<File>>() {
                         @Override
                         public Observable<File> call(Uri uri) {
@@ -150,7 +151,7 @@ public class RxPhotoPicker {
                         result.onPhotoResult(file);
                     });
         } else if (transformers == Transformers.BITMAP) {
-            requestImage(sources)
+            requestImage(sources, allowImageCrop)
                     .flatMap(new Func1<Uri, Observable<Bitmap>>() {
                         @Override
                         public Observable<Bitmap> call(Uri uri) {
@@ -161,7 +162,7 @@ public class RxPhotoPicker {
                         result.onPhotoResult(bitmap);
                     });
         } else {
-            requestImage(sources)
+            requestImage(sources, allowImageCrop)
                     .subscribe(uri -> {
                         result.onPhotoResult(uri);
                     });
