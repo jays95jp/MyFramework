@@ -38,7 +38,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyak:rxdialog:1.0.0@aar'
+  compile 'com.kevadiyakrunalk:rxdialog:1.0'
 }
 ```
 ```java
@@ -139,7 +139,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyak:rxphotopicker:1.0.0@aar'
+  compile 'com.kevadiyakrunalk:rxphotopicker:1.0'
 }
 ```
 ```java
@@ -180,7 +180,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyak:rxpermissions:1.0.0@aar'
+  compile 'com.kevadiyakrunalk:rxpermissions:1.0'
 }
 ```
 ```java
@@ -230,7 +230,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyak:rxfilepicker:1.0.1@aar'
+  compile 'com.kevadiyakrunalk:rxfilepicker:1.0'
 }
 ```
 ```xml
@@ -317,19 +317,18 @@ dependencies {
 repositories {
     jcenter()
     mavenCentral()
-    /* maven { url 'https://dl.bintray.com/kevadiyak/MyFramework/' } */
 }
 dependencies {
-    compile 'com.kevadiyak:commonutils:1.0.0@aar' /* Common Utils */
-    compile 'com.kevadiyak:customfont:1.0.0@aar' /* Custom font */
-    compile 'com.kevadiyak:mvvmarchitecture:1.0.0@aar' /* MVVM Architecture */
-    compile 'com.kevadiyak:recycleadapter:1.0.1@aar' /* Recycleview Adapter */
-    compile 'com.kevadiyak:rxdialog:1.0.0@aar' /* Alert/Prompt/Progress Dialog */
-    compile 'com.kevadiyak:rxfilepicker:1.0.1@aar' /* File Picker */
-    compile 'com.kevadiyak:rxlocation:1.0.0@aar' /* Location */
-    compile 'com.kevadiyak:rxpermissions:1.0.0@aar' /* Runtime Permission */
-    compile 'com.kevadiyak:rxphotopicker:1.0.0@aar' /* Photo/Image Picker */
-    compile 'com.kevadiyak:rxpreference:1.0.0@aar' /* Save or Get data from preference */
-    compile 'com.kevadiyak:rxvalidation:1.0.0@aar' /* Validation */  
+    compile 'com.kevadiyakrunalk:commonutils:1.0' /* Common Utils */
+    compile 'com.kevadiyakrunalk:customfont:1.0' /* Custom font */
+    compile 'com.kevadiyakrunalk:mvvmarchitecture:1.0' /* MVVM Architecture */
+    compile 'com.kevadiyakrunalk:recycleadapter:1.0' /* Recycleview Adapter */
+    compile 'com.kevadiyakrunalk:rxdialog:1.0' /* Alert/Prompt/Progress Dialog */
+    compile 'com.kevadiyakrunalk:rxfilepicker:1.0' /* File Picker */
+    compile 'com.kevadiyakrunalk:rxlocation:1.0' /* Location */
+    compile 'com.kevadiyakrunalk:rxpermissions:1.0' /* Runtime Permission */
+    compile 'com.kevadiyakrunalk:rxphotopicker:1.0' /* Photo/Image Picker */
+    compile 'com.kevadiyakrunalk:rxpreference:1.0' /* Save or Get data from preference */
+    compile 'com.kevadiyakrunalk:rxvalidation:1.0' /* Validation */   
 }
 ```
