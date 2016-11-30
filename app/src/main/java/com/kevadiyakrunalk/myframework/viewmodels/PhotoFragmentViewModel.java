@@ -41,7 +41,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                 public void onPermissionResult(String permission, boolean granted) {
                     if(granted) {
                         RxPhotoPicker.getInstance(context)
-                                .pickSingleImage(Sources.GALLERY, Transformers.URI, new PhotoInterface<Uri>() {
+                                .pickSingleImage(Sources.GALLERY, Transformers.URI, true, new PhotoInterface<Uri>() {
                                     @Override
                                     public void onPhotoResult(Uri uri) {
                                         logs.error("gallery", "Uri -> " + uri);
@@ -53,7 +53,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
             }, Manifest.permission.READ_EXTERNAL_STORAGE);
         } else {
             RxPhotoPicker.getInstance(context)
-                    .pickSingleImage(Sources.GALLERY, Transformers.URI, new PhotoInterface<Uri>() {
+                    .pickSingleImage(Sources.GALLERY, Transformers.URI, true, new PhotoInterface<Uri>() {
                         @Override
                         public void onPhotoResult(Uri uri) {
                             logs.error("gallery", "Uri -> " + uri);
@@ -70,7 +70,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                 public void onPermissionResult(String permission, boolean granted) {
                     if(granted) {
                         RxPhotoPicker.getInstance(context)
-                                .pickSingleImage(Sources.GALLERY, Transformers.BITMAP, new PhotoInterface<Bitmap>() {
+                                .pickSingleImage(Sources.GALLERY, Transformers.BITMAP, true, new PhotoInterface<Bitmap>() {
                                     @Override
                                     public void onPhotoResult(Bitmap bitmap) {
                                         logs.error("gallery", "Bitmap -> " + bitmap.toString());
@@ -82,7 +82,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
             }, Manifest.permission.READ_EXTERNAL_STORAGE);
         } else {
             RxPhotoPicker.getInstance(context)
-                    .pickSingleImage(Sources.GALLERY, Transformers.BITMAP, new PhotoInterface<Bitmap>() {
+                    .pickSingleImage(Sources.GALLERY, Transformers.BITMAP, true, new PhotoInterface<Bitmap>() {
                         @Override
                         public void onPhotoResult(Bitmap bitmap) {
                             logs.error("gallery", "Bitmap -> " + bitmap.toString());
@@ -99,7 +99,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                 public void onPermissionResult(String permission, boolean granted) {
                     if(granted) {
                         RxPhotoPicker.getInstance(context)
-                                .pickSingleImage(Sources.GALLERY, Transformers.FILE, new PhotoInterface<File>() {
+                                .pickSingleImage(Sources.GALLERY, Transformers.FILE, true, new PhotoInterface<File>() {
                                     @Override
                                     public void onPhotoResult(File file) {
                                         logs.error("gallery", "File -> " + file.getName());
@@ -111,7 +111,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
             }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         } else {
             RxPhotoPicker.getInstance(context)
-                    .pickSingleImage(Sources.GALLERY, Transformers.FILE, new PhotoInterface<File>() {
+                    .pickSingleImage(Sources.GALLERY, Transformers.FILE, true, new PhotoInterface<File>() {
                         @Override
                         public void onPhotoResult(File file) {
                             logs.error("gallery", "File -> " + file.getName());
@@ -128,7 +128,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                 public void onPermissionResult(String permission, boolean granted) {
                     if(granted) {
                         RxPhotoPicker.getInstance(context)
-                                .pickSingleImage(Sources.CAMERA, Transformers.URI, new PhotoInterface<Uri>() {
+                                .pickSingleImage(Sources.CAMERA, Transformers.URI, true, new PhotoInterface<Uri>() {
                                     @Override
                                     public void onPhotoResult(Uri uri) {
                                         logs.error("camera", "Uri -> " + uri);
@@ -140,7 +140,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
             }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
         } else {
             RxPhotoPicker.getInstance(context)
-                    .pickSingleImage(Sources.CAMERA, Transformers.URI, new PhotoInterface<Uri>() {
+                    .pickSingleImage(Sources.CAMERA, Transformers.URI, true, new PhotoInterface<Uri>() {
                         @Override
                         public void onPhotoResult(Uri uri) {
                             logs.error("camera", "Uri -> " + uri);
@@ -157,7 +157,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                 public void onPermissionResult(String permission, boolean granted) {
                     if(granted) {
                         RxPhotoPicker.getInstance(context)
-                                .pickSingleImage(Sources.CAMERA, Transformers.BITMAP, new PhotoInterface<Bitmap>() {
+                                .pickSingleImage(Sources.CAMERA, Transformers.BITMAP, true, new PhotoInterface<Bitmap>() {
                                     @Override
                                     public void onPhotoResult(Bitmap bitmap) {
                                         logs.error("camera", "Bitmap -> " + bitmap.toString());
@@ -169,7 +169,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
             }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
         } else {
             RxPhotoPicker.getInstance(context)
-                    .pickSingleImage(Sources.CAMERA, Transformers.BITMAP, new PhotoInterface<Bitmap>() {
+                    .pickSingleImage(Sources.CAMERA, Transformers.BITMAP, true, new PhotoInterface<Bitmap>() {
                         @Override
                         public void onPhotoResult(Bitmap bitmap) {
                             logs.error("camera", "Bitmap -> " + bitmap.toString());
@@ -186,7 +186,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                 public void onPermissionResult(String permission, boolean granted) {
                     if(granted) {
                         RxPhotoPicker.getInstance(context)
-                                .pickSingleImage(Sources.CAMERA, Transformers.FILE, new PhotoInterface<File>() {
+                                .pickSingleImage(Sources.CAMERA, Transformers.FILE, true, new PhotoInterface<File>() {
                                     @Override
                                     public void onPhotoResult(File file) {
                                         logs.error("camera", "File -> " + file.getName());
@@ -198,7 +198,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
             }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
         } else {
             RxPhotoPicker.getInstance(context)
-                    .pickSingleImage(Sources.CAMERA, Transformers.FILE, new PhotoInterface<File>() {
+                    .pickSingleImage(Sources.CAMERA, Transformers.FILE, true, new PhotoInterface<File>() {
                         @Override
                         public void onPhotoResult(File file) {
                             logs.error("camera", "File -> " + file.getName());

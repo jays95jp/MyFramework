@@ -35,6 +35,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'io.reactivex:rxjava:1.2.0'
     compile 'com.android.support:support-annotations:25.0.1'
+    compile 'com.yalantis:ucrop:2.2.0'
     compile project(':commonutils')
 }
 
