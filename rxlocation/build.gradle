@@ -34,14 +34,14 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'io.reactivex:rxjava:1.2.0'
-    compile 'com.google.android.gms:play-services-places:10.0.0'
-    compile 'com.google.android.gms:play-services-location:10.0.0'
+    compile 'com.google.android.gms:play-services-places:10.0.1'
+    compile 'com.google.android.gms:play-services-location:10.0.1'
 }
 
 ext {
     PUBLISH_GROUP_ID = 'com.kevadiyakrunalk'
     PUBLISH_ARTIFACT_ID = 'rxlocation'
-    PUBLISH_VERSION = '1.0'
+    PUBLISH_VERSION = '1.1'
 }
 
 apply from: '../gradle/android-release-jar.gradle'

@@ -18,8 +18,7 @@ import rx.Observer;
  */
 public class LastKnownLocationObservable extends BaseLocationObservable<Location> {
     private Context context;
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private Location location = null;
 
     /**
      * Create observable observable.
@@ -39,79 +38,26 @@ public class LastKnownLocationObservable extends BaseLocationObservable<Location
     @SuppressWarnings("MissingPermission")
     @Override
     protected void onGoogleApiClientReady(GoogleApiClient apiClient, Observer<? super Location> observer) {
-        Location location = null;
         try {
+            location = null;
             LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (isGPSEnabled || isNetworkEnabled) {
-                if (isGPSEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, new LocationListener() {
-                                @Override
-                                public void onLocationChanged(Location location) {
-                                    if (location != null)
-                                        observer.onNext(location);
-                                    observer.onCompleted();
-                                }
+            if (location == null && isGPSEnabled)
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-                                @Override
-                                public void onStatusChanged(String provider, int status, Bundle extras) {
+            if(location == null)
+                location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
 
-                                }
-
-                                @Override
-                                public void onProviderEnabled(String provider) {
-
-                                }
-
-                                @Override
-                                public void onProviderDisabled(String provider) {
-
-                                }
-                            });
-                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                }
-
-                if (location == null && isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, new LocationListener() {
-                                @Override
-                                public void onLocationChanged(Location location) {
-                                    if (location != null)
-                                        observer.onNext(location);
-                                    observer.onCompleted();
-                                }
-
-                                @Override
-                                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                                }
-
-                                @Override
-                                public void onProviderEnabled(String provider) {
-
-                                }
-
-                                @Override
-                                public void onProviderDisabled(String provider) {
-
-                                }
-                            });
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                }
-
-                if(location == null)
-                    location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
-            }
+            if (location == null && isNetworkEnabled)
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (location != null) {
+        if (location != null)
             observer.onNext(location);
-        }
         observer.onCompleted();
     }
 }

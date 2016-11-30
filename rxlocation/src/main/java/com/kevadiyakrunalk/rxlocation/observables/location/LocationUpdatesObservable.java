@@ -2,6 +2,8 @@ package com.kevadiyakrunalk.rxlocation.observables.location;
 
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationManager;
+import android.os.Bundle;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -17,6 +19,7 @@ import rx.Observer;
  */
 public class LocationUpdatesObservable extends BaseLocationObservable<Location> {
     private Context context;
+    private int count;
 
     /**
      * Create observable observable.
@@ -31,23 +34,76 @@ public class LocationUpdatesObservable extends BaseLocationObservable<Location> 
 
     private final LocationRequest locationRequest;
     private LocationListener listener;
+    private LocationManager locationManager;
+    private android.location.LocationListener locationListener;
 
     private LocationUpdatesObservable(Context ctx, LocationRequest locationRequest) {
         super(ctx);
         context = ctx;
+        count = 0;
         this.locationRequest = locationRequest;
     }
 
+    @SuppressWarnings("MissingPermission")
     @Override
     protected void onGoogleApiClientReady(GoogleApiClient apiClient, final Observer<? super Location> observer) {
-        listener = location -> observer.onNext(location);
-        LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, listener);
+        listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if(count != locationRequest.getNumUpdates()) {
+                    observer.onNext(location);
+                    count++;
+                }
+            }
+        };
+        locationListener = new android.location.LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if(count != locationRequest.getNumUpdates()) {
+                    observer.onNext(location);
+                    count++;
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+            }
+            @Override
+            public void onProviderEnabled(String s) {
+            }
+            @Override
+            public void onProviderDisabled(String s) {
+            }
+        };
+
+        try {
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (isGPSEnabled)
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRequest.getInterval(),
+                        0, locationListener);
+
+            LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, listener);
+
+            if (isNetworkEnabled)
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, locationRequest.getInterval(),
+                        0, locationListener);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    @SuppressWarnings("MissingPermission")
     @Override
     protected void onUnsubscribed(GoogleApiClient locationClient) {
         if (locationClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(locationClient, listener);
         }
+        if(locationManager != null && locationListener != null)
+            locationManager.removeUpdates(locationListener);
     }
 }
