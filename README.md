@@ -38,13 +38,13 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:rxdialog:1.0'
+  compile 'com.kevadiyakrunalk:rxdialog:1.0@aar'
 }
 ```
 ```java
 //- Prompt Dialog
     new RxPromptDialog
-         .Builder(context)
+         .Builder(this)
          .title(R.string.dialog_title) //for dialog title 
          .message(R.string.dialog_message) //for user mnessage
          .cancellable(Boolean.TRUE)
@@ -77,7 +77,7 @@ dependencies {
          
 //- Alert Dialog
     new RxAlertDialog
-          .Builder(context)
+          .Builder(this)
           .title(R.string.dialog_title)
           .message(R.string.dialog_message) // for user message
           .image(R.drawable.sample_img) //[optional] with image
@@ -104,7 +104,7 @@ dependencies {
           })          
 //- Progress Dialog 
      new RxProgressDialog
-           .Builder(context)
+           .Builder(this)
            .message("Please Wait…")
            .cancellable(false)
            .toObservable(zipObservable)
@@ -139,13 +139,13 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:rxphotopicker:1.0'
+  compile 'com.kevadiyakrunalk:rxphotopicker:1.0@aar'
 }
 ```
 ```java
 // - Single image pick
    RxPhotoPicker
-    .getInstance(context)
+    .getInstance(this)
     .pickSingleImage(
       Sources.GALLERY /*you have use source as a pick from gallery or camera*/, 
       Transformers.URI /*you have set Transformers as your actual image getting format like Uri, Bitmap or File*/, 
@@ -159,7 +159,7 @@ dependencies {
        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) /*[Option param] this param only use when you have pick image as a file format*/);
 // - Multiple image pick
    RxPhotoPicker
-    .getInstance(context)
+    .getInstance(this)
     .pickMultipleImage(
       Transformers.URI /*you have set Transformers as your actual image getting format like Uri, Bitmap or File*/,
       new PhotoInterface<List<Uri
@@ -180,13 +180,13 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:rxpermissions:1.0'
+  compile 'com.kevadiyakrunalk:rxpermissions:1.0@aar'
 }
 ```
 ```java
 // - Single
    RxPermissions
-    .getInstance(context)
+    .getInstance(this)
     .checkMPermission(new PermissionResult() {
        @Override
        public void onPermissionResult(String permission, boolean granted) {
@@ -195,7 +195,7 @@ dependencies {
     }, Manifest.permission.CAMERA);
 // - Multiple
    RxPermissions
-    .getInstance(context)
+    .getInstance(this)
     .checkMPermission(new PermissionResult() {
         @Override
         public void onPermissionResult(String permission, boolean granted) {
@@ -230,7 +230,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:rxfilepicker:1.0'
+  compile 'com.kevadiyakrunalk:rxfilepicker:1.0@aar'
 }
 ```
 ```xml
@@ -245,43 +245,43 @@ dependencies {
    private int MAX_ATTACHMENT_COUNT = 5;
    private ArrayList<FileType> fileTypes;
    fileTypes = new ArrayList<>();
-        FileType fileType = new FileType();
-        fileType.setGroupTitle("PDF");
-        fileType.setGroupIcon(R.drawable.ic_pdf);
-        fileType.setGroupExtension("pdf");
-        fileTypes.add(fileType);
+   FileType fileType = new FileType();
+   fileType.setGroupTitle("PDF");
+   fileType.setGroupIcon(R.drawable.ic_pdf);
+   fileType.setGroupExtension("pdf");
+   fileTypes.add(fileType);
 
-        fileType = new FileType();
-        fileType.setGroupTitle("PPT");
-        fileType.setGroupIcon(R.drawable.icon_ppt);
-        fileType.setGroupExtension("ppt,pptx");
-        fileTypes.add(fileType);
+   fileType = new FileType();
+   fileType.setGroupTitle("PPT");
+   fileType.setGroupIcon(R.drawable.icon_ppt);
+   fileType.setGroupExtension("ppt,pptx");
+   fileTypes.add(fileType);
 
-        fileType = new FileType();
-        fileType.setGroupTitle("DOC");
-        fileType.setGroupIcon(R.drawable.ic_doc);
-        fileType.setGroupExtension("doc,docx,dot,dotx");
-        fileTypes.add(fileType);
+   fileType = new FileType();
+   fileType.setGroupTitle("DOC");
+   fileType.setGroupIcon(R.drawable.ic_doc);
+   fileType.setGroupExtension("doc,docx,dot,dotx");
+   fileTypes.add(fileType);
 
-        fileType = new FileType();
-        fileType.setGroupTitle("XLS");
-        fileType.setGroupIcon(R.drawable.ic_xls);
-        fileType.setGroupExtension("xls,xlsx");
-        fileTypes.add(fileType);
+   fileType = new FileType();
+   fileType.setGroupTitle("XLS");
+   fileType.setGroupIcon(R.drawable.ic_xls);
+   fileType.setGroupExtension("xls,xlsx");
+   fileTypes.add(fileType);
 
-        fileType = new FileType();
-        fileType.setGroupTitle("TXT");
-        fileType.setGroupIcon(R.drawable.ic_txt);
-        fileType.setGroupExtension("txt");
-        fileTypes.add(fileType);
+   fileType = new FileType();
+   fileType.setGroupTitle("TXT");
+   fileType.setGroupIcon(R.drawable.ic_txt);
+   fileType.setGroupExtension("txt");
+   fileTypes.add(fileType);
         
    RxFilePicker
-    .getInstance(activity)
+    .getInstance(this)
     .setMaxCount(MAX_ATTACHMENT_COUNT)
     .setFileType(fileTypes)
     .setDirectory(Environment.getExternalStorageDirectory())
     .setActivityTheme(R.style.FilePickerTheme)
-    .pickDocument(activity, new RxFilePicker.FileResult() {
+    .pickDocument(this, new RxFilePicker.FileResult() {
         @Override
         public void PickFileList(ArrayList<String> list) {
              Log.e("Files", list.toString());
@@ -298,15 +298,80 @@ dependencies {
 * both side swipe menu support.
 * multiple layout support (header, footer, customs xml etc).
 * Also I used databinding concept, so don’t worry about null value :) 
+```groovy
+//add dependencies for app level build.gradle
+repositories {
+    jcenter()
+    mavenCentral()
+}
+dependencies {
+  compile 'com.kevadiyakrunalk:recycleadapter:1.0@aar'
+}
+```
+```java
+```
 
 ### 11. Log-cat
 * for use display your value in console with class name, which line number to call and your data set.
-
+```groovy
+//add dependencies for app level build.gradle
+repositories {
+    jcenter()
+    mavenCentral()
+}
+dependencies {
+  compile 'com.kevadiyakrunalk:commonutils:1.0@aar'
+}
+```
+```java
+   Logs.getInstance(this).verbose(TAG, Message);
+   Logs.getInstance(this).debug(TAG, Message);
+   Logs.getInstance(this).info(TAG, Message);
+   Logs.getInstance(this).warn(TAG, Message);
+   Logs.getInstance(this).error(TAG, Message);
+```
 ### 12. Image Compressor
 * you can compress image with based on maxWidth, maxHeight, format and quality.
-
+```groovy
+//add dependencies for app level build.gradle
+repositories {
+    jcenter()
+    mavenCentral()
+}
+dependencies {
+  compile 'com.kevadiyakrunalk:commonutils:1.0@aar'
+}
+```
+```java
+   new Compressor.Builder(this, this.getFilesDir().getPath())
+       .setMaxWidth(612.0f).setMaxHeight(816.0f).setQuality(80) //default option
+       .build().compressToFileAsObservable(file)
+       .subscribe(new Action1<File>() {
+           @Override
+           public void call(File file) {
+               logs.error("Compressor", "File -> " + (file.length()/1024) + " KB");
+           }
+       });
+```
 ### 13. Drawable Color Change
 * change drawable color for example your image is white color then you can change same image into red color.
+```groovy
+//add dependencies for app level build.gradle
+repositories {
+    jcenter()
+    mavenCentral()
+}
+dependencies {
+  compile 'com.kevadiyakrunalk:commonutils:1.0@aar'
+}
+```
+```java
+   imageView.setImageDrawable(
+     DrawableColorChange.getInstance(this).changeColorById(R.drawable.ic_file, R.color.colorAccent));
+   imageView.setImageDrawable(
+     DrawableColorChange.getInstance(this).changeColorByColor(ContextCompat.getDrawable(this, R.drawable.ic_file),
+     Color.Red));  
+```
 
 ### 14. EventBus
 * used for data passing from one class to other class.
@@ -319,16 +384,16 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    compile 'com.kevadiyakrunalk:commonutils:1.0' /* Common Utils */
-    compile 'com.kevadiyakrunalk:customfont:1.0' /* Custom font */
-    compile 'com.kevadiyakrunalk:mvvmarchitecture:1.0' /* MVVM Architecture */
-    compile 'com.kevadiyakrunalk:recycleadapter:1.0' /* Recycleview Adapter */
-    compile 'com.kevadiyakrunalk:rxdialog:1.0' /* Alert/Prompt/Progress Dialog */
-    compile 'com.kevadiyakrunalk:rxfilepicker:1.0' /* File Picker */
-    compile 'com.kevadiyakrunalk:rxlocation:1.0' /* Location */
-    compile 'com.kevadiyakrunalk:rxpermissions:1.0' /* Runtime Permission */
-    compile 'com.kevadiyakrunalk:rxphotopicker:1.0' /* Photo/Image Picker */
-    compile 'com.kevadiyakrunalk:rxpreference:1.0' /* Save or Get data from preference */
-    compile 'com.kevadiyakrunalk:rxvalidation:1.0' /* Validation */   
+    compile 'com.kevadiyakrunalk:commonutils:1.0@aar' /* Common Utils */
+    compile 'com.kevadiyakrunalk:customfont:1.0@aar' /* Custom font */
+    compile 'com.kevadiyakrunalk:mvvmarchitecture:1.0@aar' /* MVVM Architecture */
+    compile 'com.kevadiyakrunalk:recycleadapter:1.0@aar' /* Recycleview Adapter */
+    compile 'com.kevadiyakrunalk:rxdialog:1.0@aar' /* Alert/Prompt/Progress Dialog */
+    compile 'com.kevadiyakrunalk:rxfilepicker:1.0@aar' /* File Picker */
+    compile 'com.kevadiyakrunalk:rxlocation:1.1@aar' /* Location */
+    compile 'com.kevadiyakrunalk:rxpermissions:1.0@aar' /* Runtime Permission */
+    compile 'com.kevadiyakrunalk:rxphotopicker:1.0@aar' /* Photo/Image Picker */
+    compile 'com.kevadiyakrunalk:rxpreference:1.0@aar' /* Save or Get data from preference */
+    compile 'com.kevadiyakrunalk:rxvalidation:1.0@aar' /* Validation */   
 }
 ```
