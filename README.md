@@ -309,6 +309,35 @@ dependencies {
 }
 ```
 ```java
+   CustomBindAdapter
+      .with(new Data().getItems(), BR.item) 
+      .map(Header.class, R.layout.item_header) 
+      .map(Point.class, R.layout.item_point) 
+      .onBindListener(this)
+      .onClickListener(this) 
+      .onLoadMoreListener(this)
+      .onLongClickListener(this)
+      .onSwipMenuListener(R.id.view_main_content, 0, R.id.view_end)
+      .into(list); //set recycleview object
+      
+  CustomBindAdapter
+      .with(new Data().getItems(), BR.item) 
+      .layoutHandler(this)
+      .onBindListener(this)
+      .onLoadMoreListener(this)
+      .onClickListener(this, R.id.tvEmail) 
+      .onLongClickListener(this, R.id.tvEmail) 
+      .onSwipMenuListener(R.id.view_main_content, R.id.view_start, R.id.view_end)
+      .into(list); //set recycleview object    
+/*
+      with -> first argument is your list and second argument is your binding object but remind to you, your all list item
+              layout file in same binding name define like  
+              <data>
+                 <variable name="item" type="pojo class path" /> 
+              </data>
+      map -> here i am set two list item one is header and second is point, so it will automatically handle the layout file
+             bind in list based on your give class.   
+*/      
 ```
 
 ### 11. Log-cat
@@ -343,10 +372,16 @@ dependencies {
 }
 ```
 ```java
-   new Compressor.Builder(this, this.getFilesDir().getPath())
-       .setMaxWidth(612.0f).setMaxHeight(816.0f).setQuality(80) //default option
-       .build().compressToFileAsObservable(file)
-       .subscribe(new Action1<File>() {
+   new Compressor.Builder(this, this.getFilesDir().getPath()) //path is destination file to which location save
+       .setMaxWidth(612.0f) //[optional] set the resultan image/photo maximum width
+       .setMaxHeight(816.0f) //[optional] set the resultan image/photo maximum height
+       .setQuality(80) //[optional] set the result image quality.
+       .build()
+       // set dialog button, use Either compressToFileAsObservable or compressToBitmapAsObservable
+       .compressToFileAsObservable(file) //file is your want to compress image/photo path
+       .compressToBitmapAsObservable(file) //file is your want to compress image/photo path
+       
+       .subscribe(new Action1<File/*set argument based on your are use above two function [File/Bitmap] */>() {
            @Override
            public void call(File file) {
                logs.error("Compressor", "File -> " + (file.length()/1024) + " KB");
