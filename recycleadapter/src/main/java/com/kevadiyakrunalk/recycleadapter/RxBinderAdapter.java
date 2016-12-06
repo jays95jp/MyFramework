@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -416,7 +417,7 @@ public class RxBinderAdapter extends RecyclerView.Adapter<RxBinderAdapter.ViewHo
         }*/
 
         public RxBinderAdapter into(RecyclerView recyclerView, RecyclerView.LayoutManager... layoutManager) {
-            helper = new ItemTouchHelperExtension(new ItemTouchHelperCallback(dragDirection, swipDirection));
+            helper = new ItemTouchHelperExtension(new ItemTouchHelperCallback(0, swipDirection));
             RxBinderAdapter adapter = build();
             if(layoutManager != null && layoutManager.length > 0) {
                 recyclerView.setHasFixedSize(false);
