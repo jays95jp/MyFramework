@@ -3,7 +3,18 @@ package com.kevadiyakrunalk.myframework.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kevadiyakrunalk.commonutils.common.Logs;
 import com.kevadiyakrunalk.mvvmarchitecture.MvvmFragment;
@@ -13,17 +24,25 @@ import com.kevadiyakrunalk.myframework.R;
 import com.kevadiyakrunalk.myframework.databinding.FragmentAdapterBinding;
 import com.kevadiyakrunalk.myframework.other.adapter.Data;
 import com.kevadiyakrunalk.myframework.other.adapter.Header;
-import com.kevadiyakrunalk.myframework.other.adapter.Point;
+import com.kevadiyakrunalk.myframework.other.adapter.Items;
 import com.kevadiyakrunalk.myframework.viewmodels.AdapterFragmentViewModel;
-import com.kevadiyakrunalk.recycleadapter.CustomBindAdapter;
+import com.kevadiyakrunalk.recycleadapter.RxBinderAdapter;
+import com.kevadiyakrunalk.recycleadapter.RxDataSource;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.functions.Func1;
 
 public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, AdapterFragmentViewModel>
-        /*implements CustomBindAdapter.LayoutHandler,
-        CustomBindAdapter.OnBindListener,
-        CustomBindAdapter.OnClickListener,
-        CustomBindAdapter.OnLongClickListener*/ {
+        implements //RxBinderAdapter.LayoutHandler,
+        //RxBinderAdapter.OnBindListener,
+        RxBinderAdapter.OnClickListener,
+        RxBinderAdapter.OnLongClickListener,
+        RxBinderAdapter.OnLoadMoreListener {
 
-    private Data data;
+    List<Object> dataSet;
+    RxDataSource rxDataSource;
 
     @NonNull
     @Override
@@ -40,42 +59,86 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        data = new Data();
+        setHasOptionsMenu(true);
+        dataSet = new ArrayList<>();
+        dataSet.addAll(new Data().getItems());
 
-        CustomBindAdapter.with(data.getItems(), BR.item)
+        rxDataSource = new RxDataSource(dataSet);
+        rxDataSource.repeat(1)
+        .<RxBinderAdapter.ViewHolder>bindRecyclerView(RxBinderAdapter.with(new Data().getItems(), BR.item)
                 .map(Header.class, R.layout.item_header)
-                .map(Point.class, R.layout.item_point)
+                .map(Items.class, R.layout.item_text)
+                //.layoutHandler(this)
                 //.onBindListener(this)
-                /*.onClickListener(new CustomBindAdapter.OnClickListener() {
-                    @Override
-                    public void onClick(Object item, View view, int type, int position) {
-                        if(item instanceof Point) {
-                            Point point = (Point) item;
-                            Log.e("Krunal", "x->" + point.getX() + " | y->" + point.getY());
-                            Toast.makeText(v.getContext(), "Click on Header " + text, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, R.id.pointX)*/
-                //.onLongClickListener(this) //Toast.makeText(v.getContext(), "Click on Point(" + x + "," + y + ")", Toast.LENGTH_SHORT).show();
-                /*.onLoadMoreListener(new CustomBindAdapter.OnLoadMoreListener() {
-                    @Override
-                    public boolean onLoadMore(int size) {
-                        data.setMoreData();
-                        return false;
-                    }
-                })*/
-                .onSwipMenuListener(R.id.view_main_content, R.id.view_start, R.id.view_end)
-                //.onSwipMenuListener(R.id.view_main_content, 0, R.id.view_end)
-                .into(getBinding().list, new LinearLayoutManager(getContext()));
-
-        /*CustomBindAdapter.with(new Data().getItems(), BR.item)
-                //.map(Header.class, R.layout.item_header)
-                //.map(Point.class, R.layout.item_point)
-                .layoutHandler(this)
-                .onBindListener(this)
+                //.onClickListener(this, R.id.btn_drag)
+                //.onLongClickListener(this, R.id.btn_drag)
                 .onClickListener(this)
                 .onLongClickListener(this)
-                .into(list);*/
+                .onLoadMoreListener(this)
+                .onSwipMenuListener(R.id.view_main_content, R.id.view_start, R.id.view_end)
+                //.onSwipMenuListener(R.id.view_main_content, 0, R.id.view_end)
+                .into(getBinding().list, new LinearLayoutManager(getActivity())))
+        .subscribe(viewHolder -> {
+            /*ItemLayoutBinding b = viewHolder.getViewDataBinding();
+            String item = ((String) viewHolder.getItem());
+            b.textViewItem.setText(String.valueOf(item));*/
+        });
+        dataSet = rxDataSource.getAdapter().getDataSet();
+
+        rxDataSource.filter(new Func1<Object, Boolean>() {
+            @Override
+            public Boolean call(Object s) {
+                if(s instanceof Items) {
+                    Log.e("Item", ((Items) s).toString());
+                    return ((Items) s).getText().length() > 0;
+                } else if(s instanceof Header) {
+                    Log.e("Item", ((Header) s).toString());
+                    return ((Header) s).getText().length() > 0;
+                } else
+                    return false;
+            }
+        }).map(new Func1<Object, Object>() {
+            @Override
+            public Object call(Object s) {
+                if(s instanceof Items)
+                    ((Items) s).setText(((Items) s).getText().toLowerCase());
+                return s;
+            }
+        }).updateAdapter();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem item = menu.add("Search");
+        item.setIcon(android.R.drawable.ic_menu_search); // sets icon
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        SearchView sv = new SearchView(getActivity());
+
+        // implementing the listener
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                rxDataSource.updateDataSet(dataSet) //base items should remain the same
+                        .filter(new Func1<Object, Boolean>() {
+                            @Override
+                            public Boolean call(Object s) {
+                                if (s instanceof Items) {
+                                    return ((Items) s).getText().toLowerCase().contains(newText);
+                                } else if (s instanceof Header) {
+                                    return ((Header) s).getText().toLowerCase().contains(newText);
+                                } else
+                                    return true;
+                            }
+                        }).updateAdapter();
+                return false;
+            }
+        });
+        item.setActionView(sv);
     }
 
     /*@Override
@@ -86,7 +149,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
             else
                 return R.layout.item_header;
         } else
-            return R.layout.item_point;
+            return R.layout.item_text;
     }
 
     @Override
@@ -103,20 +166,27 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                 break;
             case R.layout.item_point:
                 ItemPointBinding pointBinding = DataBindingUtil.getBinding(view);
-                Point point = (Point) item;
-                pointBinding.pointX.setTag("X:" + point.getX());
-                pointBinding.pointY.setTag("Y:" + point.getY());
+                Items point = (Point) Items;
+                pointBinding.tvItems.setTag("Item:" + point.getText());
                 break;
         }
-    }
-
-    @Override
-    public void onClick(@NotNull Object item, @NotNull View view, int type, int position) {
-        Toast.makeText(this, "onClick position " +position +": " +item, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onLongClick(@NotNull Object item, @NotNull View view, int type, int position) {
-        Toast.makeText(this, "onLongClick position " +position +": " +item, Toast.LENGTH_SHORT).show();
     }*/
+
+    @Override
+    public void onClick(Object item, View view, int type, int position) {
+        Toast.makeText(getActivity(), "onClick position " +position +": " +item, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLongClick(Object item, View view, int type, int position) {
+        Toast.makeText(getActivity(), "onLongClick position " +position +": " +item, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onLoadMore(int size) {
+        Log.e("LoadMore", "Size->" + size);
+        dataSet.addAll(new Data().getMoreData());
+        rxDataSource.updateDataSet(dataSet).updateAdapter();
+        return false;
+    }
 }

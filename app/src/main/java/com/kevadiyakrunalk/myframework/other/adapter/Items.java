@@ -1,12 +1,16 @@
 package com.kevadiyakrunalk.myframework.other.adapter;
 
-public class Header {
+/**
+ * Created by Krunal.Kevadiya on 06/12/16.
+ */
+
+public class Items {
     private String text;
 
-    public Header(String txt) {
-        text = txt;
+    public Items(String msg) {
+        text = msg;
     }
-    
+
     public String getText() {
         return text;
     }
@@ -17,7 +21,7 @@ public class Header {
 
     @Override
     public String toString() {
-        return "Header{" +
+        return "Items{" +
                 "text='" + text + '\'' +
                 '}';
     }
