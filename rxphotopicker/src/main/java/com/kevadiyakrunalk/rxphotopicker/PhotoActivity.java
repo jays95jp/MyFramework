@@ -2,19 +2,23 @@ package com.kevadiyakrunalk.rxphotopicker;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
-//import com.mylibrary.common.FileUtil;
 import com.kevadiyakrunalk.commonutils.common.FileUtil;
-import com.yalantis.ucrop.UCrop;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Photo activity.
@@ -73,29 +77,82 @@ public class PhotoActivity extends Activity {
                     handleCameraResult(cameraPictureUrl);
                     break;
 
-                case UCrop.REQUEST_CROP:
-                    Uri resultUri = UCrop.getOutput(data);
-                    RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(resultUri);
+                case Constant.CROPING_CODE:
+                    RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(cropPictureUrl);
                     finish();
                     break;
             }
-        } else {
-            if(requestCode == UCrop.REQUEST_CROP) {
-                Log.e("Error", "Ucrop");
-                Throwable cropError = UCrop.getError(data);
-                cropError.printStackTrace();
-            }
-            finish();
         }
     }
 
     private void handleCameraResult(Uri cameraPictureUrl) {
         if(getIntent().getBooleanExtra(ALLOW_IMAGE_CROP, false)) {
-            cropPictureUrl = FileUtil.getInstance(getApplicationContext()).createImageUri();
-            UCrop.of(cameraPictureUrl, cropPictureUrl)
-                    .start(this);
+            try{
+                cropPictureUrl = Uri.fromFile(FileUtil.getInstance(getApplicationContext())
+                        .createImageTempFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            CropingIMG(cameraPictureUrl, cropPictureUrl);
         } else
             RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(cameraPictureUrl);
+    }
+
+    private void CropingIMG(final Uri sourceImage, Uri destinationImage) {
+        final ArrayList<CropingOption> cropOptions = new ArrayList<CropingOption>();
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setType("image/*");
+
+        List<ResolveInfo> list = getPackageManager().queryIntentActivities( intent, 0 );
+        int size = list.size();
+        if (size == 0) {
+            Toast.makeText(this, "Cann't find image croping app", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            CropOption.Builder cropBuilder = RxPhotoPicker.getInstance(getApplicationContext()).getBuilder();
+            if(cropBuilder == null)
+                cropBuilder = new CropOption.Builder();
+
+            intent.setData(sourceImage);
+            intent.putExtra("outputX", cropBuilder.getOutputX());
+            intent.putExtra("outputY", cropBuilder.getOutputY());
+            intent.putExtra("aspectX", cropBuilder.getAspectX());
+            intent.putExtra("aspectY", cropBuilder.getAspectY());
+            intent.putExtra("scale", cropBuilder.isScale());
+
+            //intent.putExtra("return-data", true);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, destinationImage);
+
+            if (size == 1) {
+                Intent i   = new Intent(intent);
+                ResolveInfo res = (ResolveInfo) list.get(0);
+                i.setComponent( new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                startActivityForResult(i, Constant.CROPING_CODE);
+            } else {
+                for (ResolveInfo res : list) {
+                    final CropingOption co = new CropingOption();
+                    co.title  = getPackageManager().getApplicationLabel(res.activityInfo.applicationInfo);
+                    co.icon  = getPackageManager().getApplicationIcon(res.activityInfo.applicationInfo);
+                    co.appIntent= new Intent(intent);
+                    co.appIntent.setComponent( new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                    cropOptions.add(co);
+                }
+
+                CropingOptionAdapter adapter = new CropingOptionAdapter(getApplicationContext(), cropOptions);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Choose Croping App");
+                builder.setCancelable(false);
+                builder.setAdapter(adapter, (dialog, item) -> startActivityForResult( cropOptions.get(item).appIntent, Constant.CROPING_CODE));
+                builder.setOnCancelListener(dialog -> {
+                    if (sourceImage != null ) {
+                        getContentResolver().delete(sourceImage, null, null );
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -114,9 +171,13 @@ public class PhotoActivity extends Activity {
             RxPhotoPicker.getInstance(getApplicationContext()).onImagesPicked(imageUris);
         } else {
             if(getIntent().getBooleanExtra(ALLOW_IMAGE_CROP, false)) {
-                cropPictureUrl = FileUtil.getInstance(getApplicationContext()).createImageUri();
-                UCrop.of(data.getData(), cropPictureUrl)
-                        .start(this);
+                try {
+                    cropPictureUrl = Uri.fromFile(FileUtil.getInstance(getApplicationContext())
+                            .createImageTempFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                CropingIMG(data.getData(), cropPictureUrl);
             } else
                 RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(data.getData());
         }

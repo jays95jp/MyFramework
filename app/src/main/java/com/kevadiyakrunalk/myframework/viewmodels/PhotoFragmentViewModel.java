@@ -12,6 +12,7 @@ import com.kevadiyakrunalk.commonutils.common.Logs;
 import com.kevadiyakrunalk.mvvmarchitecture.common.BaseViewModel;
 import com.kevadiyakrunalk.rxpermissions.PermissionResult;
 import com.kevadiyakrunalk.rxpermissions.RxPermissions;
+import com.kevadiyakrunalk.rxphotopicker.CropOption;
 import com.kevadiyakrunalk.rxphotopicker.PhotoInterface;
 import com.kevadiyakrunalk.rxphotopicker.RxPhotoPicker;
 import com.kevadiyakrunalk.rxphotopicker.Sources;
@@ -35,13 +36,18 @@ public class PhotoFragmentViewModel extends BaseViewModel {
     }
 
     public void onGalleryUri(View view) {
+        CropOption.Builder builder = new CropOption.Builder();
+        builder.setOutputHW(690, 690);
+        builder.setAspectRatio(3, 2);
+        builder.setScale(true);
+
         if(RxPermissions.getInstance(context).isMarshmallow()) {
             RxPermissions.getInstance(context).checkMPermission(new PermissionResult() {
                 @Override
                 public void onPermissionResult(String permission, boolean granted) {
                     if(granted) {
                         RxPhotoPicker.getInstance(context)
-                                .pickSingleImage(Sources.GALLERY, Transformers.URI, true, new PhotoInterface<Uri>() {
+                                .pickSingleImage(Sources.GALLERY, Transformers.URI, true, builder, new PhotoInterface<Uri>() {
                                     @Override
                                     public void onPhotoResult(Uri uri) {
                                         logs.error("gallery", "Uri -> " + uri);
@@ -53,7 +59,7 @@ public class PhotoFragmentViewModel extends BaseViewModel {
             }, Manifest.permission.READ_EXTERNAL_STORAGE);
         } else {
             RxPhotoPicker.getInstance(context)
-                    .pickSingleImage(Sources.GALLERY, Transformers.URI, true, new PhotoInterface<Uri>() {
+                    .pickSingleImage(Sources.GALLERY, Transformers.URI, true, builder, new PhotoInterface<Uri>() {
                         @Override
                         public void onPhotoResult(Uri uri) {
                             logs.error("gallery", "Uri -> " + uri);

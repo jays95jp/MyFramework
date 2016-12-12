@@ -72,9 +72,9 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
         rxDataSource.repeat(1)
         .<RxBinderAdapter.ViewHolder>bindRecyclerView(
                 RxBinderAdapter.with(data.getItems(), BR.item)
-                    //.map(Header.class, R.layout.item_header)
-                    //.map(Items.class, R.layout.item_text)
-                    .layoutHandler(this)
+                    .map(Header.class, R.layout.item_header)
+                    .map(Items.class, R.layout.item_text)
+                    //.layoutHandler(this)
                     .onBindListener(this)
                     //.onClickListener(this, R.id.btn_drag)
                     //.onLongClickListener(this, R.id.btn_drag)

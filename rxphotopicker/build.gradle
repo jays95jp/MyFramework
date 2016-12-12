@@ -18,6 +18,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
+        vectorDrawables.useSupportLibrary = true
     }
 
     compileOptions {
@@ -29,13 +30,20 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
+
+    sourceSets.main {
+        jni.srcDirs = [];
+    }
+
+    resourcePrefix 'ucrop_'
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'io.reactivex:rxjava:1.2.0'
     compile 'com.android.support:support-annotations:25.0.1'
-    compile 'com.yalantis:ucrop:2.2.0'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile project(':commonutils')
 }
 

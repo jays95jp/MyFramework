@@ -221,6 +221,78 @@ public class FileUtil {
         }
     }
 
+    public void copyFile(String file1, String file2, boolean preserveFileDate) throws IOException {
+        File srcFile = new File(file1);
+        File destFile = new File(file2);
+        if (srcFile == null) {
+            throw new NullPointerException("Source must not be null");
+        } else if (destFile == null) {
+            throw new NullPointerException("Destination must not be null");
+        } else if (!srcFile.exists()) {
+            throw new FileNotFoundException("Source \'" + srcFile + "\' does not exist");
+        } else if (srcFile.isDirectory()) {
+            throw new IOException("Source \'" + srcFile + "\' exists but is a directory");
+        } else if (srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) {
+            throw new IOException("Source \'" + srcFile + "\' and destination \'" + destFile + "\' are the same");
+        } else {
+            File parentFile = destFile.getParentFile();
+            if (parentFile != null && !parentFile.mkdirs() && !parentFile.isDirectory()) {
+                throw new IOException("Destination \'" + parentFile + "\' directory cannot be created");
+            } else if (destFile.exists() && !destFile.canWrite()) {
+                throw new IOException("Destination \'" + destFile + "\' exists but is read-only");
+            } else {
+                if (destFile.exists() && destFile.isDirectory()) {
+                    throw new IOException("Destination \'" + destFile + "\' exists but is a directory");
+                } else {
+                    FileInputStream fis = null;
+                    FileOutputStream fos = null;
+                    FileChannel input = null;
+                    FileChannel output = null;
+
+                    try {
+                        fis = new FileInputStream(srcFile);
+                        fos = new FileOutputStream(destFile);
+                        input = fis.getChannel();
+                        output = fos.getChannel();
+                        long size = input.size();
+                        long pos = 0L;
+
+                        for (long count = 0L; pos < size; pos += output.transferFrom(input, pos, count)) {
+                            count = size - pos > 31457280L ? 31457280L : size - pos;
+                        }
+                    } finally {
+                        try {
+                            if (output != null) {
+                                output.close();
+                            }
+
+                            if (fos != null) {
+                                fos.close();
+                            }
+
+                            if (input != null) {
+                                input.close();
+                            }
+
+                            if (fis != null) {
+                                fis.close();
+                            }
+                        } catch (IOException var2) {
+                        }
+                    }
+
+                    if (srcFile.length() != destFile.length()) {
+                        throw new IOException("Failed to copy full contents from \'" + srcFile + "\' to \'" + destFile + "\'");
+                    } else {
+                        if (preserveFileDate) {
+                            destFile.setLastModified(srcFile.lastModified());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Move directory to directory.
      *

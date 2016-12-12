@@ -28,6 +28,7 @@ public class RxPhotoPicker {
     private static RxPhotoPicker sSingleton;
 
     private Context context;
+    private CropOption.Builder builder;
     private PublishSubject<Uri> publishSubject;
     private PublishSubject<List<Uri>> publishSubjectMultipleImages;
 
@@ -85,6 +86,10 @@ public class RxPhotoPicker {
         return publishSubjectMultipleImages;
     }
 
+    public CropOption.Builder getBuilder() {
+        return builder;
+    }
+
     /**
      * On image picked.
      *
@@ -127,8 +132,91 @@ public class RxPhotoPicker {
      * @param filePathDir  the file path dir
      */
     //User use to activity
-    @SuppressWarnings({"Convert2MethodRef", "unchecked"})
+    public void pickSingleImage(Sources sources, Transformers transformers, PhotoInterface result, File... filePathDir) {
+        if (transformers == Transformers.FILE) {
+            requestImage(sources, false)
+                    .flatMap(new Func1<Uri, Observable<File>>() {
+                        @Override
+                        public Observable<File> call(Uri uri) {
+                            File filePath = null;
+                            try {
+                                if (filePathDir.length > 0)
+                                    filePath = FileUtil.getInstance(context).createImageTempFile(filePathDir[0]);
+                            }catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if(filePath != null)
+                                return ImageUtil.getInstance(context).uriToFile(uri, filePath);
+                            else
+                                return null;
+                        }
+                    })
+                    .subscribe(file -> {
+                        result.onPhotoResult(file);
+                    });
+        } else if (transformers == Transformers.BITMAP) {
+            requestImage(sources, false)
+                    .flatMap(new Func1<Uri, Observable<Bitmap>>() {
+                        @Override
+                        public Observable<Bitmap> call(Uri uri) {
+                            return ImageUtil.getInstance(context).uriToBitmap(uri);
+                        }
+                    })
+                    .subscribe(bitmap -> {
+                        result.onPhotoResult(bitmap);
+                    });
+        } else {
+            requestImage(sources, false)
+                    .subscribe(uri -> {
+                        result.onPhotoResult(uri);
+                    });
+        }
+    }
+
     public void pickSingleImage(Sources sources, Transformers transformers, boolean allowImageCrop, PhotoInterface result, File... filePathDir) {
+        builder = new CropOption.Builder();
+        if (transformers == Transformers.FILE) {
+            requestImage(sources, allowImageCrop)
+                    .flatMap(new Func1<Uri, Observable<File>>() {
+                        @Override
+                        public Observable<File> call(Uri uri) {
+                            File filePath = null;
+                            try {
+                                if (filePathDir.length > 0)
+                                    filePath = FileUtil.getInstance(context).createImageTempFile(filePathDir[0]);
+                            }catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if(filePath != null)
+                                return ImageUtil.getInstance(context).uriToFile(uri, filePath);
+                            else
+                                return null;
+                        }
+                    })
+                    .subscribe(file -> {
+                        result.onPhotoResult(file);
+                    });
+        } else if (transformers == Transformers.BITMAP) {
+            requestImage(sources, allowImageCrop)
+                    .flatMap(new Func1<Uri, Observable<Bitmap>>() {
+                        @Override
+                        public Observable<Bitmap> call(Uri uri) {
+                            return ImageUtil.getInstance(context).uriToBitmap(uri);
+                        }
+                    })
+                    .subscribe(bitmap -> {
+                        result.onPhotoResult(bitmap);
+                    });
+        } else {
+            requestImage(sources, allowImageCrop)
+                    .subscribe(uri -> {
+                        result.onPhotoResult(uri);
+                    });
+        }
+    }
+
+    public void pickSingleImage(Sources sources, Transformers transformers, boolean allowImageCrop, CropOption.Builder builder, PhotoInterface result, File... filePathDir) {
+        this.builder = builder;
         if (transformers == Transformers.FILE) {
             requestImage(sources, allowImageCrop)
                     .flatMap(new Func1<Uri, Observable<File>>() {
@@ -176,7 +264,6 @@ public class RxPhotoPicker {
      * @param result       the result
      * @param filePathDir  the file path dir
      */
-    @SuppressWarnings({"Convert2MethodRef", "unchecked"})
     public void pickMultipleImage(Transformers transformers, PhotoInterface result, File... filePathDir) {
         if (transformers == Transformers.FILE) {
             requestMultipleImages()

@@ -12,4 +12,6 @@ public class Constant {
      * The constant TAKE_PHOTO.
      */
     public static final int TAKE_PHOTO = 9124;
+
+    public static final int CROPING_CODE = 9125;
 }
