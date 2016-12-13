@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
@@ -99,11 +100,10 @@ public class PhotoActivity extends Activity {
     }
 
     private void CropingIMG(final Uri sourceImage, Uri destinationImage) {
-        final ArrayList<CropingOption> cropOptions = new ArrayList<CropingOption>();
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setType("image/*");
 
-        List<ResolveInfo> list = getPackageManager().queryIntentActivities( intent, 0 );
+        List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, 0 );
         int size = list.size();
         if (size == 0) {
             Toast.makeText(this, "Cann't find image croping app", Toast.LENGTH_SHORT).show();
@@ -125,32 +125,13 @@ public class PhotoActivity extends Activity {
 
             if (size == 1) {
                 Intent i   = new Intent(intent);
-                ResolveInfo res = (ResolveInfo) list.get(0);
-                i.setComponent( new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                ResolveInfo res = list.get(0);
+                i.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
                 startActivityForResult(i, Constant.CROPING_CODE);
-            } else {
-                for (ResolveInfo res : list) {
-                    final CropingOption co = new CropingOption();
-                    co.title  = getPackageManager().getApplicationLabel(res.activityInfo.applicationInfo);
-                    co.icon  = getPackageManager().getApplicationIcon(res.activityInfo.applicationInfo);
-                    co.appIntent= new Intent(intent);
-                    co.appIntent.setComponent( new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-                    cropOptions.add(co);
-                }
-
-                CropingOptionAdapter adapter = new CropingOptionAdapter(getApplicationContext(), cropOptions);
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Choose Croping App");
-                builder.setCancelable(false);
-                builder.setAdapter(adapter, (dialog, item) -> startActivityForResult( cropOptions.get(item).appIntent, Constant.CROPING_CODE));
-                builder.setOnCancelListener(dialog -> {
-                    if (sourceImage != null ) {
-                        getContentResolver().delete(sourceImage, null, null );
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
+            } else  {
+                Intent i   = new Intent(intent);
+                i.putExtra(Intent.EXTRA_INITIAL_INTENTS, list.toArray(new Parcelable[list.size()]));
+                startActivityForResult(i, Constant.CROPING_CODE);
             }
         }
     }
