@@ -139,7 +139,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:rxphotopicker:1.0@aar'
+  compile 'com.kevadiyakrunalk:rxphotopicker:1.1@aar'
 }
 ```
 ```java
@@ -157,6 +157,42 @@ dependencies {
          }
        }, 
        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) /*[Option param] this param only use when you have pick image as a file format*/);
+// - Single image pick with crop option and default setting
+   RxPhotoPicker
+    .getInstance(this)
+    .pickSingleImage(
+      Sources.GALLERY /*you have use source as a pick from gallery or camera*/, 
+      Transformers.URI /*you have set Transformers as your actual image getting format like Uri, Bitmap or File*/, 
+      true /*you have set crop then pass true and use with the default setting*/,
+      new PhotoInterface<
+       Uri/*Set argument based on your transformers for example Transformers.URI to Uri, Transformers.BITMAP to Bitmap*/>(){
+         @Override
+         public void onPhotoResult(Uri uri) {
+           //here is your output based on Transformers Like URI, BITMAP or FILE.
+         }
+       }, 
+       Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) /*[Option param] this param only use when you have pick image as a file format*/); 
+// - Single image pick with crop option and custom setting
+   CropOption.Builder builder = new CropOption.Builder();
+        builder.setOutputHW(690, 690);
+        builder.setAspectRatio(3, 2);
+        builder.setScale(true);
+        
+   RxPhotoPicker
+    .getInstance(this)
+    .pickSingleImage(
+      Sources.GALLERY /*you have use source as a pick from gallery or camera*/, 
+      Transformers.URI /*you have set Transformers as your actual image getting format like Uri, Bitmap or File*/, 
+      true /*you have set crop then pass true and use with the default setting*/,
+      builder /*crop option in custom setting*/,
+      new PhotoInterface<
+       Uri/*Set argument based on your transformers for example Transformers.URI to Uri, Transformers.BITMAP to Bitmap*/>(){
+         @Override
+         public void onPhotoResult(Uri uri) {
+           //here is your output based on Transformers Like URI, BITMAP or FILE.
+         }
+       }, 
+       Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) /*[Option param] this param only use when you have pick image as a file format*/);  
 // - Multiple image pick
    RxPhotoPicker
     .getInstance(this)
@@ -305,30 +341,11 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:recycleadapter:1.0@aar'
+  compile 'com.kevadiyakrunalk:recycleadapter:1.1@aar'
 }
 ```
 ```java
-   CustomBindAdapter
-      .with(new Data().getItems(), BR.item) 
-      .map(Header.class, R.layout.item_header) 
-      .map(Point.class, R.layout.item_point) 
-      .onBindListener(this)
-      .onClickListener(this) 
-      .onLoadMoreListener(this)
-      .onLongClickListener(this)
-      .onSwipMenuListener(R.id.view_main_content, 0, R.id.view_end)
-      .into(list); //set recycleview object
-      
-  CustomBindAdapter
-      .with(new Data().getItems(), BR.item) 
-      .layoutHandler(this)
-      .onBindListener(this)
-      .onLoadMoreListener(this)
-      .onClickListener(this, R.id.tvEmail) 
-      .onLongClickListener(this, R.id.tvEmail) 
-      .onSwipMenuListener(R.id.view_main_content, R.id.view_start, R.id.view_end)
-      .into(list); //set recycleview object    
+   
 /*
       with -> first argument is your list and second argument is your binding object but remind to you, your all list item
               layout file in same binding name define like  
@@ -422,12 +439,12 @@ dependencies {
     compile 'com.kevadiyakrunalk:commonutils:1.0@aar' /* Common Utils */
     compile 'com.kevadiyakrunalk:customfont:1.0@aar' /* Custom font */
     compile 'com.kevadiyakrunalk:mvvmarchitecture:1.0@aar' /* MVVM Architecture */
-    compile 'com.kevadiyakrunalk:recycleadapter:1.0@aar' /* Recycleview Adapter */
+    compile 'com.kevadiyakrunalk:recycleadapter:1.1@aar' /* Recycleview Adapter */
     compile 'com.kevadiyakrunalk:rxdialog:1.0@aar' /* Alert/Prompt/Progress Dialog */
     compile 'com.kevadiyakrunalk:rxfilepicker:1.0@aar' /* File Picker */
     compile 'com.kevadiyakrunalk:rxlocation:1.1@aar' /* Location */
     compile 'com.kevadiyakrunalk:rxpermissions:1.0@aar' /* Runtime Permission */
-    compile 'com.kevadiyakrunalk:rxphotopicker:1.0@aar' /* Photo/Image Picker */
+    compile 'com.kevadiyakrunalk:rxphotopicker:1.1@aar' /* Photo/Image Picker */
     compile 'com.kevadiyakrunalk:rxpreference:1.0@aar' /* Save or Get data from preference */
     compile 'com.kevadiyakrunalk:rxvalidation:1.0@aar' /* Validation */   
 }
