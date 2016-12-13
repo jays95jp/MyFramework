@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:background="@android:color/white">
 
         <LinearLayout
@@ -142,6 +143,7 @@
                 android:src="@drawable/icon_ppt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="fitXY"
                 android:id="@+id/imageView2" />
 
         </LinearLayout>
