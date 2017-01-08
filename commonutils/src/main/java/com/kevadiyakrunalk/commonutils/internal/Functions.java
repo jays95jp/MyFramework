@@ -2,6 +2,7 @@ package com.kevadiyakrunalk.commonutils.internal;
 
 import rx.functions.Func0;
 import rx.functions.Func1;
+import rx.functions.Function;
 
 /**
  * The type Functions.

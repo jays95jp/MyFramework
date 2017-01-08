@@ -2,6 +2,7 @@ package com.kevadiyakrunalk.recycleadapter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.Collections;
@@ -20,19 +21,19 @@ import rx.functions.Func2;
  */
 public class RxDataSource {
 
-    private List<Object> mDataSet;
-    private RxBinderAdapter mAdapter;
+    private List<Pair<Object, List<Object>>> mDataSet;
+    private RxBinderAdapterDemo mAdapter;
 
-    public RxDataSource(List<Object> dataSet) {
+    public RxDataSource(List<Pair<Object, List<Object>>> dataSet) {
         this.mDataSet = dataSet;
     }
 
     @Nullable
-    public RxBinderAdapter getAdapter() {
+    public RxBinderAdapterDemo getAdapter() {
         return mAdapter;
     }
 
-    public Observable<RxBinderAdapter.ViewHolder> bindRecyclerView(RxBinderAdapter adapter) {
+    public Observable<RxBinderAdapterDemo.MyBaseViewHolder> bindRecyclerView(RxBinderAdapterDemo adapter) {
         mAdapter = adapter;
         return mAdapter.asObservable();
     }
@@ -40,7 +41,7 @@ public class RxDataSource {
     /***
      * For setting base dataSet
      */
-    public RxDataSource updateDataSet(List<Object> dataSet) {
+    public RxDataSource updateDataSet(List<Pair<Object, List<Object>>> dataSet) {
         mDataSet = dataSet;
         return this;
     }
@@ -54,7 +55,7 @@ public class RxDataSource {
         }
     }
 
-    public RxDataSource map(Func1<? super Object, ? super Object> func) {
+    /*public RxDataSource map(Func1<? super Object, ? super Object> func) {
         mDataSet = Observable.from(mDataSet).map(func).toList().toBlocking().first();
         return this;
     }
@@ -233,13 +234,13 @@ public class RxDataSource {
                 Observable.from(mDataSet).reduce(initialValue, accumulator).toList().toBlocking().first();
         return this;
     }
-
+*/
     public final RxDataSource repeat(final long count) {
-        List<Object> dataSet = mDataSet;
+        List<Pair<Object, List<Object>>> dataSet = mDataSet;
         mDataSet = Observable.from(dataSet).repeat(count).toList().toBlocking().first();
         return this;
     }
-
+/*
     public final RxDataSource repeat(final long count, Scheduler scheduler) {
         mDataSet = Observable.from(mDataSet).repeat(count, scheduler).toList().toBlocking().first();
         return this;
@@ -258,5 +259,5 @@ public class RxDataSource {
     public final RxDataSource takeLast(final int count) {
         mDataSet = Observable.from(mDataSet).takeLast(count).toList().toBlocking().first();
         return this;
-    }
+    }*/
 }

@@ -1,4 +1,5 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <data>
         <variable name="item"
@@ -7,15 +8,63 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="80dp"
+        android:background="#ffffff">
 
-        <TextView
-            android:id="@+id/headerText"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="@android:color/darker_gray"
-            android:text="@{item.text}" />
+            android:layout_height="match_parent"
+            android:background="#888888">
+
+            <Button
+                android:id="@android:id/button1"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:text="Button"/>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:background="@color/bg_item_normal_state"
+            android:foreground="?attr/selectableItemBackground"
+            tools:ignore="UselessParent">
+
+            <!-- NOTE: the drag handle should set android:clickable=true not to propagate click events to the parent views -->
+            <View
+                android:id="@+id/drag_handle"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="top|left"
+                android:background="#20000000"
+                android:clickable="true"
+                tools:ignore="RtlHardcoded"/>
+
+            <TextView
+                android:id="@android:id/text1"
+                android:text="@{item.text}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top|left"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"/>
+
+            <com.kevadiyakrunalk.recycleadapter.widget.ExpandableItemIndicator
+                android:id="@+id/indicator"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="16dp"/>
+
+        </FrameLayout>
 
     </FrameLayout>
 

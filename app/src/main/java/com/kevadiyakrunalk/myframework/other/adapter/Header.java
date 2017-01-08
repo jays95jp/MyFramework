@@ -1,10 +1,21 @@
 package com.kevadiyakrunalk.myframework.other.adapter;
 
-public class Header {
-    private String text;
+import com.kevadiyakrunalk.recycleadapter.utility.DataUtils;
+import com.kevadiyakrunalk.recycleadapter.utility.GroupData;
 
-    public Header(String txt) {
+public class Header extends GroupData {
+    private long mId;
+    private int mPinned;
+    private String text;
+    private boolean isSection;
+    private long mNextChildId;
+
+    public Header(long id, boolean section, String txt) {
+        mId = id;
         text = txt;
+        mNextChildId = 0;
+        isSection = section;
+        mPinned = DataUtils.SWAP_NONE;
     }
     
     public String getText() {
@@ -16,9 +27,39 @@ public class Header {
     }
 
     @Override
+    public boolean isSectionHeader() {
+        return isSection;
+    }
+
+    @Override
+    public long getGroupId() {
+        return mId;
+    }
+
+    @Override
+    public void setPinned(int pinned) {
+        mPinned = pinned;
+    }
+
+    @Override
+    public int isPinned() {
+        return mPinned;
+    }
+
+    public long generateNewChildId() {
+        final long id = mNextChildId;
+        mNextChildId += 1;
+        return id;
+    }
+
+    @Override
     public String toString() {
         return "Header{" +
-                "text='" + text + '\'' +
+                "mId=" + mId +
+                ", mPinned=" + mPinned +
+                ", text='" + text + '\'' +
+                ", isSection=" + isSection +
+                ", mNextChildId=" + mNextChildId +
                 '}';
     }
 }
