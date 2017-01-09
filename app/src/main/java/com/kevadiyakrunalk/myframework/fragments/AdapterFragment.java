@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -76,12 +77,12 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                     .map(Items.class, R.layout.item_text)
                     //.layoutHandler(this)
                     .onBindListener(this)
-                    //.onClickListener(this, R.id.btn_drag)
+                    .onClickListener(this, R.id.action_add, R.id.action_refresh, R.id.action_delete, R.id.action_update)
                     //.onLongClickListener(this, R.id.btn_drag)
-                    .onClickListener(this)
-                    .onLongClickListener(this)
+                    //.onClickListener(this)
+                    //.onLongClickListener(this)
                     .onLoadMoreListener(this)
-                    //.onSwipMenuListener(R.id.view_main_content, R.id.view_start, R.id.view_end)
+                    .onSwipMenuListener(R.id.view_main_content, R.id.view_start, R.id.view_end)
                     //.onSwipMenuListener(R.id.view_main_content, 0, R.id.view_end)
                     .into(getBinding().list, new LinearLayoutManager(getActivity())))
         .subscribe(viewHolder -> {
@@ -178,6 +179,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
 
     @Override
     public void onClick(Object item, View view, int type, int position) {
+        Log.e("Id", "" + view.getId());
         Toast.makeText(getActivity(), "onClick position " +position +": " +item, Toast.LENGTH_SHORT).show();
     }
 

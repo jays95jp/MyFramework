@@ -13,7 +13,7 @@ public class RxValidationResult<T extends TextView> {
     private boolean isProper;
     private String message;
 
-    private RxValidationResult(T item, boolean isProper, String message) {
+    public RxValidationResult(T item, boolean isProper, String message) {
         this.item = item;
         this.isProper = isProper;
         this.message = message;
