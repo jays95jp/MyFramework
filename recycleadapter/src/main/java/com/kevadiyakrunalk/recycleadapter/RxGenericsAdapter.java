@@ -655,7 +655,7 @@ public class RxGenericsAdapter<DataType>
                 }
             }
 
-            if(expandIndicatorResId != null && expandIndicatorResId != 0) {
+            if((contentResId == null || contentResId == 0) && (expandIndicatorResId != null && expandIndicatorResId != 0)) {
                 itemView.findViewById(expandIndicatorResId).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -666,6 +666,7 @@ public class RxGenericsAdapter<DataType>
                     }
                 });
             }
+
             // set background resource (target view ID: container)
             final int dragState = getDragStateFlags();
             final int expandState = getExpandStateFlags();
