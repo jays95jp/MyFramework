@@ -1,12 +1,18 @@
 package com.kevadiyakrunalk.myframework.fragments;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.NinePatchDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,9 +33,23 @@ import com.kevadiyakrunalk.myframework.other.adapter.Header;
 import com.kevadiyakrunalk.myframework.other.adapter.Items;
 import com.kevadiyakrunalk.myframework.viewmodels.AdapterFragmentViewModel;
 import com.kevadiyakrunalk.recycleadapter.RxBinderAdapter;
+import com.kevadiyakrunalk.recycleadapter.RxBinderAdapterDemo;
 import com.kevadiyakrunalk.recycleadapter.RxDataSource;
+import com.kevadiyakrunalk.recycleadapter.RxGenericsAdapter;
+import com.kevadiyakrunalk.recycleadapter.RxGenericsDataSource;
+import com.kevadiyakrunalk.recycleadapter.animator.GeneralItemAnimator;
+import com.kevadiyakrunalk.recycleadapter.animator.SwipeDismissItemAnimator;
+import com.kevadiyakrunalk.recycleadapter.decoration.ItemShadowDecorator;
+import com.kevadiyakrunalk.recycleadapter.decoration.SimpleListDividerDecorator;
+import com.kevadiyakrunalk.recycleadapter.draggable.RecyclerViewDragDropManager;
+import com.kevadiyakrunalk.recycleadapter.expandable.RecyclerViewExpandableItemManager;
+import com.kevadiyakrunalk.recycleadapter.swipeable.RecyclerViewSwipeManager;
+import com.kevadiyakrunalk.recycleadapter.touchguard.RecyclerViewTouchActionGuardManager;
+import com.kevadiyakrunalk.recycleadapter.utility.ChildData;
+import com.kevadiyakrunalk.recycleadapter.utility.GroupData;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -38,16 +58,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, AdapterFragmentViewModel>
-        implements RxBinderAdapter.LayoutHandler,
-        RxBinderAdapter.OnBindListener,
-        RxBinderAdapter.OnClickListener,
-        RxBinderAdapter.OnLongClickListener,
-        RxBinderAdapter.OnLoadMoreListener {
+import static android.R.attr.data;
 
-    Data data;
-    List<Object> dataSet;
-    RxDataSource rxDataSource;
+public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, AdapterFragmentViewModel> {
+
+    private List<Object> mData;
+    RxGenericsDataSource<Object> rxDataSource;
 
     @NonNull
     @Override
@@ -65,54 +81,33 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        data = new Data();
-        dataSet = new ArrayList<>();
-        dataSet.addAll(data.getItems());
+        setData1();
 
-        rxDataSource = new RxDataSource(dataSet);
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View view = inflater.inflate(R.layout.item_text, null);
+
+        rxDataSource = new RxGenericsDataSource<>(mData);
         rxDataSource.repeat(1)
-        .<RxBinderAdapter.ViewHolder>bindRecyclerView(
-                RxBinderAdapter.with(data.getItems(), BR.item)
-                    .map(Header.class, R.layout.item_header)
-                    .map(Items.class, R.layout.item_text)
-                    //.layoutHandler(this)
-                    .onBindListener(this)
-                    .onClickListener(this, R.id.action_add, R.id.action_refresh, R.id.action_delete, R.id.action_update)
-                    //.onLongClickListener(this, R.id.btn_drag)
-                    //.onClickListener(this)
-                    //.onLongClickListener(this)
-                    .onLoadMoreListener(this)
-                    .onSwipMenuListener(R.id.view_main_content, R.id.view_start, R.id.view_end)
-                    //.onSwipMenuListener(R.id.view_main_content, 0, R.id.view_end)
-                    .into(getBinding().list, new LinearLayoutManager(getActivity())))
-        .subscribe(viewHolder -> {
-            /*ItemLayoutBinding b = viewHolder.getViewDataBinding();
-            String item = ((String) viewHolder.getItem());
-            b.textViewItem.setText(String.valueOf(item));*/
-        });
-        dataSet = rxDataSource.getAdapter().getDataSet();
+        .<RxGenericsAdapter.MyBaseViewHolder>bindRecyclerView(
+                 RxGenericsAdapter.with(mData, BR.item)
+                .map(Header.class, R.layout.item_header)
+                .map(Items.class, R.layout.item_text)
+                .onSwapMenuListener(R.id.container, -0.8f, 0.8f)
+                .onDragListener(R.id.drag_handle)
+                .onExpandListener(R.id.indicator, savedInstanceState)
+                .onClickListener(new RxGenericsAdapter.OnClickListener() {
+                    @Override
+                    public void onClick(RxGenericsAdapter.ItemViewTypePosition detail) {
 
-        rxDataSource.filter(new Func1<Object, Boolean>() {
-            @Override
-            public Boolean call(Object s) {
-                if(s instanceof Items)
-                    return ((Items) s).getText().length() > 0;
-                else if(s instanceof Header)
-                    return ((Header) s).getText().length() > 0;
-                else
-                    return false;
-            }
-        }).map(new Func1<Object, Object>() {
-            @Override
-            public Object call(Object s) {
-                if(s instanceof Items)
-                    ((Items) s).setText(((Items) s).getText().toLowerCase());
-                return s;
-            }
-        }).updateAdapter();
+                    }
+                })
+                .into(view.getMeasuredHeight(), getBinding().list, new LinearLayoutManager(getActivity())))
+        .subscribe(viewHolder -> {
+
+        });
     }
 
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         MenuItem item = menu.add("Search");
         item.setIcon(android.R.drawable.ic_menu_search); // sets icon
@@ -144,62 +139,46 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
             }
         });
         item.setActionView(sv);
-    }
+    }*/
 
-    @Override
-    public int getItemLayout(Object item, int position) {
-        if (item instanceof Header) {
-            if (position == 0)
-                return R.layout.item_header_first;
-            else
-                return R.layout.item_header;
-        } else
-            return R.layout.item_text;
-    }
-
-    @Override
-    public void onBind(Object item, View view, int type, int position) {
-        switch (type) {
-            case R.layout.item_header_first:
-                ItemHeaderFirstBinding headerFirstBinding = DataBindingUtil.getBinding(view);
-                headerFirstBinding.headerFirstText.setTag("firstHeader");
-                break;
-            case R.layout.item_header:
-                ItemHeaderBinding headerBinding = DataBindingUtil.getBinding(view);
-                Header header = (Header) item;
-                headerBinding.headerText.setTag("header" + header.getText());
-                break;
-            case R.layout.item_text:
-                ItemTextBinding pointBinding = DataBindingUtil.getBinding(view);
-                Items point = (Items) item;
-                pointBinding.tvItems.setTag("Item:" + point.getText());
-                break;
+    public void setData1() {
+        final String groupItems = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        mData = new LinkedList<>();
+        int sectionCount = 1;
+        for (int i = 0; i < groupItems.length(); i++) {
+            final long groupId = i;
+            final boolean isSection = (groupItems.charAt(i) == '|');
+            final String groupText = isSection ? ("Section " + sectionCount) : Character.toString(groupItems.charAt(i));
+            final Header group = new Header(groupId, isSection, groupText);
+            mData.add(group);
         }
     }
 
-    @Override
-    public void onClick(Object item, View view, int type, int position) {
-        Log.e("Id", "" + view.getId());
-        Toast.makeText(getActivity(), "onClick position " +position +": " +item, Toast.LENGTH_SHORT).show();
-    }
+    public void setData() {
+        //final String groupItems = "|ABC|DEF|GHI|JKL|MNO|PQR|STU|VWX|YZ";
+        final String groupItems = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        final String childItems = "abc";
 
-    @Override
-    public void onLongClick(Object item, View view, int type, int position) {
-        Toast.makeText(getActivity(), "onLongClick position " +position +": " +item, Toast.LENGTH_SHORT).show();
-    }
+        mData = new LinkedList<>();
+        int sectionCount = 1;
+        for (int i = 0; i < groupItems.length(); i++) {
+            final long groupId = i;
+            final boolean isSection = (groupItems.charAt(i) == '|');
+            final String groupText = isSection ? ("Section " + sectionCount) : Character.toString(groupItems.charAt(i));
+            final Header group = new Header(groupId, isSection, groupText);
+            final List<Object> children = new ArrayList<>();
 
-    @Override
-    public boolean onLoadMore(int size) {
-        Observable.just("")
-                .delay(500, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        dataSet.addAll(data.getMoreData());
-                        rxDataSource.updateDataSet(dataSet).updateAdapter();
-                    }
-                });
-        return false;
+            if (isSection) {
+                sectionCount += 1;
+            } else {
+                for (int j = 0; j < childItems.length(); j++) {
+                    final long childId = group.generateNewChildId();
+                    final String childText = Character.toString(childItems.charAt(j));
+                    children.add(new Items(childId, childText));
+                }
+            }
+
+            mData.add(new Pair<Object, List<Object>>(group, children));
+        }
     }
 }

@@ -215,7 +215,7 @@ public class ImageUtil {
                 }
             }
         }).subscribeOn(Schedulers.newThread())
-          .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<List<File>> uriToFile(final List<Uri> uri, final List<File> file) {
@@ -236,7 +236,7 @@ public class ImageUtil {
                 subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.newThread())
-          .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<Bitmap> uriToBitmap(final Uri uri) {
@@ -253,7 +253,7 @@ public class ImageUtil {
                 }
             }
         }).subscribeOn(Schedulers.newThread())
-          .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<List<Bitmap>> uriToBitmap(final List<Uri> uri) {
@@ -274,7 +274,7 @@ public class ImageUtil {
                 subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.newThread())
-          .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     private void copyInputStreamToFile(InputStream in, File file) throws IOException {

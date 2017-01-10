@@ -7,13 +7,11 @@ import rx.Subscription;
 import rx.functions.Action1;
 import rx.internal.util.SubscriptionList;
 import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
 
 public class RxEventBus {
 
     private static RxEventBus instance;
-    private final Subject<Object, Object> eventBus = new SerializedSubject<>(PublishSubject.create());
+    private final PublishSubject<Object> eventBus = PublishSubject.create();
     private SubscriptionList subscriptionList;
     private final Handler mainThread = new Handler(Looper.getMainLooper());
 

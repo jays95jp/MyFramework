@@ -102,7 +102,8 @@ public class RxBinderAdapter extends RecyclerView.Adapter<RxBinderAdapter.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        return layoutHandler != null ? layoutHandler.getItemLayout(list.get(position), position) :
+        return layoutHandler != null ?
+                layoutHandler.getItemLayout(list.get(position), position) :
                 map.get(list.get(position).getClass());
     }
 
