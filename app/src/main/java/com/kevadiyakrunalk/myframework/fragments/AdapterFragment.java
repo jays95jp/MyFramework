@@ -1,23 +1,12 @@
 package com.kevadiyakrunalk.myframework.fragments;
 
-import android.databinding.DataBindingUtil;
-import android.graphics.drawable.NinePatchDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.kevadiyakrunalk.commonutils.common.Logs;
 import com.kevadiyakrunalk.mvvmarchitecture.MvvmFragment;
@@ -25,40 +14,15 @@ import com.kevadiyakrunalk.mvvmarchitecture.common.BindingConfig;
 import com.kevadiyakrunalk.myframework.BR;
 import com.kevadiyakrunalk.myframework.R;
 import com.kevadiyakrunalk.myframework.databinding.FragmentAdapterBinding;
-import com.kevadiyakrunalk.myframework.databinding.ItemHeaderBinding;
-import com.kevadiyakrunalk.myframework.databinding.ItemHeaderFirstBinding;
-import com.kevadiyakrunalk.myframework.databinding.ItemTextBinding;
-import com.kevadiyakrunalk.myframework.other.adapter.Data;
 import com.kevadiyakrunalk.myframework.other.adapter.Header;
 import com.kevadiyakrunalk.myframework.other.adapter.Items;
 import com.kevadiyakrunalk.myframework.viewmodels.AdapterFragmentViewModel;
-import com.kevadiyakrunalk.recycleadapter.RxBinderAdapter;
-import com.kevadiyakrunalk.recycleadapter.RxBinderAdapterDemo;
-import com.kevadiyakrunalk.recycleadapter.RxDataSource;
 import com.kevadiyakrunalk.recycleadapter.RxGenericsAdapter;
 import com.kevadiyakrunalk.recycleadapter.RxGenericsDataSource;
-import com.kevadiyakrunalk.recycleadapter.animator.GeneralItemAnimator;
-import com.kevadiyakrunalk.recycleadapter.animator.SwipeDismissItemAnimator;
-import com.kevadiyakrunalk.recycleadapter.decoration.ItemShadowDecorator;
-import com.kevadiyakrunalk.recycleadapter.decoration.SimpleListDividerDecorator;
-import com.kevadiyakrunalk.recycleadapter.draggable.RecyclerViewDragDropManager;
-import com.kevadiyakrunalk.recycleadapter.expandable.RecyclerViewExpandableItemManager;
-import com.kevadiyakrunalk.recycleadapter.swipeable.RecyclerViewSwipeManager;
-import com.kevadiyakrunalk.recycleadapter.touchguard.RecyclerViewTouchActionGuardManager;
-import com.kevadiyakrunalk.recycleadapter.utility.ChildData;
-import com.kevadiyakrunalk.recycleadapter.utility.GroupData;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-
-import static android.R.attr.data;
 
 public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, AdapterFragmentViewModel> {
 
@@ -92,7 +56,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                  RxGenericsAdapter.with(mData, BR.item)
                 .map(Header.class, R.layout.item_header)
                 .map(Items.class, R.layout.item_text)
-                .onSwapMenuListener(R.id.container, -0.8f, 0.8f)
+                //.onSwapMenuListener(R.id.container, -0.8f, 0.8f)
                 .onDragListener(R.id.drag_handle)
                 .onExpandListener(R.id.indicator, savedInstanceState)
                 .onClickListener(new RxGenericsAdapter.OnClickListener() {

@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:background="@color/bg_item_normal_state"
+            android:background="@android:color/white"
             android:foreground="?attr/selectableItemBackground"
             tools:ignore="UselessParent">
 

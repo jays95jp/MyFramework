@@ -409,38 +409,12 @@ public class RxGenericsAdapter<DataType>
 
     @Override
     public void onSetGroupItemSwipeBackground(RxGenericsAdapter.MyGroupViewHolder holder, int groupPosition, int type) {
-        int bgResId = 0;
-        switch (type) {
-            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
-                bgResId = R.drawable.bg_swipe_item_neutral;
-                break;
-            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
-                bgResId = R.drawable.bg_swipe_group_item_left;
-                break;
-            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
-                bgResId = R.drawable.bg_swipe_group_item_right;
-                break;
-        }
 
-        holder.itemView.setBackgroundResource(bgResId);
     }
 
     @Override
     public void onSetChildItemSwipeBackground(RxGenericsAdapter.MyChildViewHolder holder, int groupPosition, int childPosition, int type) {
-        int bgResId = 0;
-        switch (type) {
-            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
-                bgResId = R.drawable.bg_swipe_item_neutral;
-                break;
-            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
-                bgResId = R.drawable.bg_swipe_item_left;
-                break;
-            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
-                bgResId = R.drawable.bg_swipe_item_right;
-                break;
-        }
 
-        holder.itemView.setBackgroundResource(bgResId);
     }
 
     @Override
@@ -700,25 +674,13 @@ public class RxGenericsAdapter<DataType>
             if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0) ||
                     ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) ||
                     ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0)) {
-                int bgResId;
                 boolean isExpanded;
                 boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
                 if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
-                    bgResId = R.drawable.bg_group_item_dragging_active_state;
                     // need to clear drawable state here to get correct appearance of the dragging item.
                     if(contentResId != null && contentResId != 0 && itemView.findViewById(contentResId) != null)
                         DrawableUtils.clearState(((FrameLayout) itemView.findViewById(contentResId)).getForeground());
-                } else if ((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) {
-                    bgResId = R.drawable.bg_group_item_dragging_state;
-                } else if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
-                    bgResId = R.drawable.bg_group_item_swiping_active_state;
-                } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
-                    bgResId = R.drawable.bg_group_item_swiping_state;
-                } else if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
-                    bgResId = R.drawable.bg_group_item_expanded_state;
-                } else {
-                    bgResId = R.drawable.bg_group_item_normal_state;
                 }
 
                 if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
@@ -727,8 +689,6 @@ public class RxGenericsAdapter<DataType>
                     isExpanded = false;
                 }
 
-                if(contentResId != null && contentResId != 0 && itemView.findViewById(contentResId) != null)
-                    ((FrameLayout) itemView.findViewById(contentResId)).setBackgroundResource(bgResId);
                 if(expandIndicatorResId != null && expandIndicatorResId != 0 && itemView.findViewById(expandIndicatorResId) != null)
                     ((ExpandableItemIndicator) itemView.findViewById(expandIndicatorResId)).setExpandedState(isExpanded, animateIndicator);
             }
@@ -795,25 +755,12 @@ public class RxGenericsAdapter<DataType>
 
             if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0) ||
                     ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0)) {
-                int bgResId;
 
                 if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
-                    bgResId = R.drawable.bg_item_dragging_active_state;
                     // need to clear drawable state here to get correct appearance of the dragging item.
                     if(contentResId != null && contentResId != 0 && itemView.findViewById(contentResId) != null)
                         DrawableUtils.clearState(((FrameLayout) itemView.findViewById(contentResId)).getForeground());
-                } else if ((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) {
-                    bgResId = R.drawable.bg_item_dragging_state;
-                } else if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
-                    bgResId = R.drawable.bg_item_swiping_active_state;
-                } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
-                    bgResId = R.drawable.bg_item_swiping_state;
-                } else {
-                    bgResId = R.drawable.bg_item_normal_state;
                 }
-
-                if(contentResId != null && contentResId != 0 && itemView.findViewById(contentResId) != null)
-                    ((FrameLayout) itemView.findViewById(contentResId)).setBackgroundResource(bgResId);
             }
 
             // set swiping properties
