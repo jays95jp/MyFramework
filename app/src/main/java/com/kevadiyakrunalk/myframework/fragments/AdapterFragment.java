@@ -5,8 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.kevadiyakrunalk.commonutils.common.Logs;
 import com.kevadiyakrunalk.mvvmarchitecture.MvvmFragment;
@@ -23,6 +28,9 @@ import com.kevadiyakrunalk.recycleadapter.RxGenericsDataSource;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import rx.Observable;
+import rx.functions.Func1;
 
 public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, AdapterFragmentViewModel> {
 
@@ -64,16 +72,45 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                 .onClickListener(new RxGenericsAdapter.OnClickListener() {
                     @Override
                     public void onClick(RxGenericsAdapter.ItemViewTypePosition detail) {
-
+                        Toast.makeText(getActivity(), "Click Button", Toast.LENGTH_SHORT).show();
                     }
-                })
+                }, R.id.container, R.id.button1)
                 .into(view.getMeasuredHeight(), getBinding().list, new LinearLayoutManager(getActivity())))
         .subscribe(viewHolder -> {
 
         });
+        mData = rxDataSource.getRxAdapter().getDataSet();
+
+        rxDataSource.map(new Func1<Pair<Object, List<Object>>, Pair<Object, List<Object>>>() {
+            @Override
+            public Pair<Object, List<Object>> call(Pair<Object, List<Object>> objectListPair) {
+                if (objectListPair.first instanceof Items)
+                    ((Items) objectListPair.first).setText(((Items) objectListPair.first).getText().toLowerCase());
+                else if (objectListPair.first instanceof Header)
+                    ((Header) objectListPair.first).setText(((Header) objectListPair.first).getText().toLowerCase());
+
+                for(int i=0; i<objectListPair.second.size(); i++){
+                    if (objectListPair.second.get(i) instanceof Items)
+                        ((Items) objectListPair.second.get(i)).setText(((Items) objectListPair.second.get(i)).getText().toUpperCase());
+                    else if (objectListPair.second.get(i) instanceof Header)
+                        ((Header) objectListPair.second.get(i)).setText(((Header) objectListPair.second.get(i)).getText().toUpperCase());
+                }
+                return objectListPair;
+            }
+        }).updateAdapter();
+        /*rxDataSource.map(new Func1<Object, Object>() {
+            @Override public Object call(Object s) {
+                if (s instanceof Items) {
+                    ((Items) s).setText(((Items) s).getText().toUpperCase());
+                } else if (s instanceof Header) {
+                    ((Header) s).setText(((Header) s).getText().toUpperCase());
+                }
+                return s;
+            }
+        }).updateAdapter();*/
     }
 
-    /*@Override
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         MenuItem item = menu.add("Search");
         item.setIcon(android.R.drawable.ic_menu_search); // sets icon
@@ -89,8 +126,28 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                rxDataSource.updateDataSet(dataSet) //base items should remain the same
-                        .filter(new Func1<Object, Boolean>() {
+                rxDataSource.updateDataSet(mData) //base items should remain the same
+                        .filter(new Func1<Pair<Object, List<Object>>, Boolean>() {
+                            @Override
+                            public Boolean call(Pair<Object, List<Object>> objectListPair) {
+                                boolean flag = false;
+
+                                if (objectListPair.first instanceof Items)
+                                    flag = ((Items) objectListPair.first).getText().toLowerCase().contains(newText);
+                                else if (objectListPair.first instanceof Header)
+                                    flag = ((Header) objectListPair.first).getText().toLowerCase().contains(newText);
+
+                                /*for(int i=0; i<objectListPair.second.size(); i++){
+                                    if (objectListPair.second.get(i) instanceof Items)
+                                        flag = ((Items) objectListPair.second.get(i)).getText().toLowerCase().contains(newText);
+                                    else if (objectListPair.second.get(i) instanceof Header)
+                                        flag = ((Header) objectListPair.second.get(i)).getText().toLowerCase().contains(newText);
+                                }*/
+
+                                return flag;
+                            }
+                        }).updateAdapter();
+                        /*.filter(new Func1<Object, Boolean>() {
                             @Override
                             public Boolean call(Object s) {
                                 if (s instanceof Items) {
@@ -100,19 +157,19 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                                 } else
                                     return true;
                             }
-                        }).updateAdapter();
+                        }).updateAdapter();*/
                 return false;
             }
         });
         item.setActionView(sv);
-    }*/
+    }
 
     public void setData1() {
-        final String groupItems = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        final String groupItems = "abcdefghijklmnopqrstuvwxyz";
         mData = new LinkedList<>();
         int sectionCount = 1;
         for (int i = 0; i < groupItems.length(); i++) {
-            final long groupId = i;
+            final long groupId = i + 1;
             final boolean isSection = (groupItems.charAt(i) == '|');
             final String groupText = isSection ? ("Section " + sectionCount) : Character.toString(groupItems.charAt(i));
             final Header group = new Header(groupId, isSection, groupText);

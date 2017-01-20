@@ -1,7 +1,5 @@
 package com.kevadiyakrunalk.recycleadapter;
 
-import android.support.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -11,7 +9,6 @@ import rx.annotations.Beta;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
-
 
 public class RxGenericsDataSource<DataType> {
     private List<DataType> mDataSet;
@@ -161,7 +158,8 @@ public class RxGenericsDataSource<DataType> {
         return this;
     }
 
-    @Beta public final RxGenericsDataSource<DataType> flatMap(
+    @Beta
+    public final RxGenericsDataSource<DataType> flatMap(
             Func1<? super DataType, ? extends Observable<? extends DataType>> func, int maxConcurrent) {
         mDataSet = Observable.from(mDataSet).flatMap(func, maxConcurrent).toList().toBlocking().first();
         return this;
@@ -179,7 +177,8 @@ public class RxGenericsDataSource<DataType> {
         return this;
     }
 
-    @Beta public final RxGenericsDataSource<DataType> flatMap(
+    @Beta
+    public final RxGenericsDataSource<DataType> flatMap(
             Func1<? super DataType, ? extends Observable<? extends DataType>> onNext,
             Func1<? super Throwable, ? extends Observable<? extends DataType>> onError,
             Func0<? extends Observable<? extends DataType>> onCompleted, int maxConcurrent) {

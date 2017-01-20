@@ -83,7 +83,8 @@ public class PhotoActivity extends Activity {
                     finish();
                     break;
             }
-        }
+        } else
+            finish();
     }
 
     private void handleCameraResult(Uri cameraPictureUrl) {
