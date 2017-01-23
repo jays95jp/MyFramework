@@ -245,6 +245,30 @@ dependencies {
   
 ### 6. Preference
 * you can use two ways simple and with RxJava also it will apply ENCRYPTION MODEL, so your data will be secure.
+```groovy
+//add dependencies for app level build.gradle
+repositories {
+    jcenter()
+    mavenCentral()
+}
+dependencies {
+  compile 'com.kevadiyakrunalk:rxpreference:1.0@aar'
+}
+```
+```java
+   /*initilization of preference object*/
+   RxSharedPreferences mRxSharedPreferences = 
+            new RxSharedPreferences(
+            EncryptedPreferences.getInstance(
+            getActivity() /*Activity object of given class*/, 
+            "sample", /*Preference file name*/
+            "example" /*Preference file password*/));
+  /*save value in preference*/
+  mRxSharedPreferences.putString("Name" /*key name of value save in file*/, 
+                                 "abc" /*value if you want to save*/);
+ /* get value fro preference */
+ 
+```
 
 ### 7. Validation
 * in this feature you can apply the basic validation like Age, Digit, Email, InList, Ip4, Length, MaxLength, MinLength, NonEmpty, Pattern, Phone and Custom etc.
