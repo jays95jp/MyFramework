@@ -139,7 +139,8 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:rxphotopicker:1.1@aar'
+  compile 'com.kevadiyakrunalk:rxphotopicker:1.2@aar'
+  compile 'com.kevadiyakrunalk:commonutils:1.0@aar'
 }
 ```
 ```java
