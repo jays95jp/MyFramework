@@ -9,6 +9,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -632,6 +633,18 @@ public class RxGenericsAdapter<DataType>
                             itemView.findViewById(ids).setOnClickListener(v -> onClickListener.onClick(new ItemViewTypePosition(item, v, getItemViewType(), groupPosition, -1)));
                         }
                     }
+
+                    if(expandIndicatorResId != null && expandIndicatorResId != 0) {
+                        itemView.findViewById(expandIndicatorResId).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(mExpandableItemManager.isGroupExpanded(groupPosition))
+                                    mExpandableItemManager.collapseGroup(groupPosition);
+                                else
+                                    mExpandableItemManager.expandGroup(groupPosition);
+                            }
+                        });
+                    }
                 } else {
                     itemView.setOnClickListener(v -> onClickListener.onClick(new ItemViewTypePosition(item, itemView, getItemViewType(), groupPosition, -1)));
                 }
@@ -655,7 +668,7 @@ public class RxGenericsAdapter<DataType>
                 }
             }
 
-            if((contentResId == null || contentResId == 0) && (expandIndicatorResId != null && expandIndicatorResId != 0)) {
+            if(onClickListener == null && expandIndicatorResId != null && expandIndicatorResId != 0) {
                 itemView.findViewById(expandIndicatorResId).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

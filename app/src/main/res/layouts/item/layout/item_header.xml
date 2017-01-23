@@ -18,7 +18,7 @@
             android:background="#888888">
 
             <Button
-                android:id="@android:id/button1"
+                android:id="@+id/button1"
                 style="@style/Widget.AppCompat.Button.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:visibility="@{item.sectionHeader ? View.GONE : View.VISIBLE}"
-                android:padding="16dp"
+                android:padding="30dp"
                 android:layout_marginRight="16dp"/>
 
         </FrameLayout>
