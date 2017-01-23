@@ -26,10 +26,10 @@ import java.util.List;
 
 public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, AdapterFragmentViewModel> {
 
-    //private List<Object> mData;
-    //private RxGenericsDataSource<Object> rxDataSource;
-    private List<Pair<Object, List<Object>>> mData;
-    private RxGenericsDataSource<Pair<Object, List<Object>>> rxDataSource;
+    private List<Object> mData;
+    private RxGenericsDataSource<Object> rxDataSource;
+    //private List<Pair<Object, List<Object>>> mData;
+    //private RxGenericsDataSource<Pair<Object, List<Object>>> rxDataSource;
 
     @NonNull
     @Override
@@ -47,7 +47,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        setData();
+        setData1();
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.item_text, null);
@@ -116,7 +116,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
             final boolean isSection = (groupItems.charAt(i) == '|');
             final String groupText = isSection ? ("Section " + sectionCount) : Character.toString(groupItems.charAt(i));
             final Header group = new Header(groupId, isSection, groupText);
-            //mData.add(group);
+            mData.add(group);
         }
     }
 
