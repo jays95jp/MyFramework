@@ -28,9 +28,13 @@ import com.kevadiyakrunalk.recycleadapter.RxGenericsDataSource;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, AdapterFragmentViewModel> {
 
@@ -127,26 +131,37 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
             @Override
             public boolean onQueryTextChange(String newText) {
                 rxDataSource.updateDataSet(mData) //base items should remain the same
-                        .filter(new Func1<Pair<Object, List<Object>>, Boolean>() {
+                        .flatMap(new Func1<Pair<Object, List<Object>>, Observable<Pair<Object, List<Object>>>>() {
+                            @Override
+                            public Observable<Pair<Object, List<Object>>> call(Pair<Object, List<Object>> objectListPair) {
+                                List<Object> listFilter = Observable.from(objectListPair.second).filter(new Func1<Object, Boolean>() {
+                                    @Override
+                                    public Boolean call(Object o) {
+                                        boolean flag = false;
+                                        if (o instanceof Items)
+                                            flag = ((Items) o).getText().toLowerCase().contains(newText.toLowerCase());
+                                        else if (o instanceof Header)
+                                            flag = ((Header) o).getText().toLowerCase().contains(newText.toLowerCase());
+                                        return flag;
+                                    }
+                                }).toList().toBlocking().first();
+                                return Observable.just(new Pair<>(objectListPair.first, listFilter));
+                            }
+                        }).filter(new Func1<Pair<Object, List<Object>>, Boolean>() {
                             @Override
                             public Boolean call(Pair<Object, List<Object>> objectListPair) {
                                 boolean flag = false;
-
                                 if (objectListPair.first instanceof Items)
-                                    flag = ((Items) objectListPair.first).getText().toLowerCase().contains(newText);
+                                    flag = ((Items) objectListPair.first).getText().toLowerCase().contains(newText.toLowerCase());
                                 else if (objectListPair.first instanceof Header)
-                                    flag = ((Header) objectListPair.first).getText().toLowerCase().contains(newText);
+                                    flag = ((Header) objectListPair.first).getText().toLowerCase().contains(newText.toLowerCase());
 
-                                /*for(int i=0; i<objectListPair.second.size(); i++){
-                                    if (objectListPair.second.get(i) instanceof Items)
-                                        flag = ((Items) objectListPair.second.get(i)).getText().toLowerCase().contains(newText);
-                                    else if (objectListPair.second.get(i) instanceof Header)
-                                        flag = ((Header) objectListPair.second.get(i)).getText().toLowerCase().contains(newText);
-                                }*/
-
+                                if (!flag && objectListPair.second.size() > 0)
+                                    flag = true;
                                 return flag;
                             }
-                        }).updateAdapter();
+                        })
+                        .updateAdapter();
                         /*.filter(new Func1<Object, Boolean>() {
                             @Override
                             public Boolean call(Object s) {
@@ -201,7 +216,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                 }
             }
 
-            mData.add(new Pair<Object, List<Object>>(group, children));
+            mData.add(new Pair<>(group, children));
         }
     }
 }

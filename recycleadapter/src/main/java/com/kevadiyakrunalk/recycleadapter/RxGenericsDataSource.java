@@ -1,5 +1,8 @@
 package com.kevadiyakrunalk.recycleadapter;
 
+import android.support.v4.util.Pair;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
