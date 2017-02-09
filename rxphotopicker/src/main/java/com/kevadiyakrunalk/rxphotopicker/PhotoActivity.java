@@ -87,17 +87,54 @@ public class PhotoActivity extends Activity {
             finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void handleGalleryResult(Intent data) {
+        if (getIntent().getBooleanExtra(ALLOW_MULTIPLE_IMAGES, false)) {
+            ArrayList<Uri> imageUris = new ArrayList<>();
+            ClipData clipData = data.getClipData();
+            if (clipData != null) {
+                int size = clipData.getItemCount();
+                for (int i = 0; i < size; i++) {
+                    imageUris.add(clipData.getItemAt(i).getUri());
+                }
+            } else {
+                imageUris.add(data.getData());
+            }
+            RxPhotoPicker.getInstance(getApplicationContext()).onImagesPicked(imageUris);
+            finish();
+        } else {
+            if(getIntent().getBooleanExtra(ALLOW_IMAGE_CROP, false)) {
+                try {
+                    cropPictureUrl = Uri.fromFile(FileUtil.getInstance(getApplicationContext())
+                            .createImageTempFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+                    CropingIMG(data.getData(), cropPictureUrl);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(Uri.EMPTY);
+                    finish();
+                }
+            } else {
+                RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(data.getData());
+                finish();
+            }
+        }
+    }
+
     private void handleCameraResult(Uri cameraPictureUrl) {
         if(getIntent().getBooleanExtra(ALLOW_IMAGE_CROP, false)) {
             try{
                 cropPictureUrl = Uri.fromFile(FileUtil.getInstance(getApplicationContext())
                         .createImageTempFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+                CropingIMG(cameraPictureUrl, cropPictureUrl);
             } catch (IOException e) {
                 e.printStackTrace();
+                RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(Uri.EMPTY);
+                finish();
             }
-            CropingIMG(cameraPictureUrl, cropPictureUrl);
-        } else
+        } else {
             RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(cameraPictureUrl);
+            finish();
+        }
     }
 
     private void CropingIMG(final Uri sourceImage, Uri destinationImage) {
@@ -134,34 +171,6 @@ public class PhotoActivity extends Activity {
                 i.putExtra(Intent.EXTRA_INITIAL_INTENTS, list.toArray(new Parcelable[list.size()]));
                 startActivityForResult(i, Constant.CROPING_CODE);
             }
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void handleGalleryResult(Intent data) {
-        if (getIntent().getBooleanExtra(ALLOW_MULTIPLE_IMAGES, false)) {
-            ArrayList<Uri> imageUris = new ArrayList<>();
-            ClipData clipData = data.getClipData();
-            if (clipData != null) {
-                int size = clipData.getItemCount();
-                for (int i = 0; i < size; i++) {
-                    imageUris.add(clipData.getItemAt(i).getUri());
-                }
-            } else {
-                imageUris.add(data.getData());
-            }
-            RxPhotoPicker.getInstance(getApplicationContext()).onImagesPicked(imageUris);
-        } else {
-            if(getIntent().getBooleanExtra(ALLOW_IMAGE_CROP, false)) {
-                try {
-                    cropPictureUrl = Uri.fromFile(FileUtil.getInstance(getApplicationContext())
-                            .createImageTempFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                CropingIMG(data.getData(), cropPictureUrl);
-            } else
-                RxPhotoPicker.getInstance(getApplicationContext()).onImagePicked(data.getData());
         }
     }
 
