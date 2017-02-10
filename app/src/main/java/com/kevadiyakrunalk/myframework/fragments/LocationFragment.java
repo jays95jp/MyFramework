@@ -296,6 +296,7 @@ public class LocationFragment extends NavigatingMvvmFragment<LocationNavigator, 
                                         public String call(DetectedActivity detectedActivity) {
                                             return getNameFromType(detectedActivity.getType()) + " with confidence " + detectedActivity.getConfidence();
                                         }
+
                                         private String getNameFromType(int activityType) {
                                             switch (activityType) {
                                                 case DetectedActivity.RUNNING:

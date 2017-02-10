@@ -68,6 +68,12 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
         rxDataSource.repeat(1)
         .<RxGenericsAdapter.MyBaseViewHolder>bindRecyclerView(
                  RxGenericsAdapter.with(mData, BR.item)
+                         .layoutHandler(new RxGenericsAdapter.LayoutHandler() {
+                             @Override
+                             public int getItemLayout(RxGenericsAdapter.ItemPosition detail) {
+                                 return 0;
+                             }
+                         })
                 .map(Header.class, R.layout.item_header)
                 .map(Items.class, R.layout.item_text)
                 .onSwapMenuListener(R.id.container, -0.8f, 0.8f)
@@ -79,13 +85,20 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                         Toast.makeText(getActivity(), "Click Button", Toast.LENGTH_SHORT).show();
                     }
                 }, R.id.container, R.id.button1)
-                .into(view.getMeasuredHeight(), getBinding().list, new LinearLayoutManager(getActivity())))
+                .onLoadMoreListener(new RxGenericsAdapter.OnLoadMoreListener() {
+                    @Override
+                    public boolean onLoadMore(int size) {
+                        return false;
+                    }
+                })
+                //.into(view.getMeasuredHeight(), getBinding().list, new LinearLayoutManager(getActivity())))
+                .into(0, getBinding().list, new LinearLayoutManager(getActivity())))
         .subscribe(viewHolder -> {
 
         });
         mData = rxDataSource.getRxAdapter().getDataSet();
 
-        rxDataSource.map(new Func1<Pair<Object, List<Object>>, Pair<Object, List<Object>>>() {
+        /*rxDataSource.map(new Func1<Pair<Object, List<Object>>, Pair<Object, List<Object>>>() {
             @Override
             public Pair<Object, List<Object>> call(Pair<Object, List<Object>> objectListPair) {
                 if (objectListPair.first instanceof Items)
@@ -101,7 +114,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                 }
                 return objectListPair;
             }
-        }).updateAdapter();
+        }).updateAdapter();*/
         /*rxDataSource.map(new Func1<Object, Object>() {
             @Override public Object call(Object s) {
                 if (s instanceof Items) {
