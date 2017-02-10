@@ -93,12 +93,12 @@ dependencies {
     /*compile 'com.kevadiyakrunalk:commonutils:1.0'
     compile 'com.kevadiyakrunalk:customfont:1.0'
     compile 'com.kevadiyakrunalk:mvvmarchitecture:1.0'
-    compile 'com.kevadiyakrunalk:recycleadapter:1.0'
+    compile 'com.kevadiyakrunalk:recycleadapter:2.0'
     compile 'com.kevadiyakrunalk:rxdialog:1.0'
     compile 'com.kevadiyakrunalk:rxfilepicker:1.0'
     compile 'com.kevadiyakrunalk:rxlocation:1.0'
     compile 'com.kevadiyakrunalk:rxpermissions:1.0'
-    compile 'com.kevadiyakrunalk:rxphotopicker:1.0'
+    compile 'com.kevadiyakrunalk:rxphotopicker:1.3'
     compile 'com.kevadiyakrunalk:rxpreference:1.0'
     compile 'com.kevadiyakrunalk:rxvalidation:1.0'*/
 

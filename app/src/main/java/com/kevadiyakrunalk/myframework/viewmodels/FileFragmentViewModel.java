@@ -37,6 +37,12 @@ public class FileFragmentViewModel extends BaseViewModel {
 
         fileTypes = new ArrayList<>();
         FileType fileType = new FileType();
+        fileType.setGroupTitle("IMAGE");
+        fileType.setGroupIcon(R.drawable.ic_pdf);
+        fileType.setGroupExtension("jpg,jpeg,png");
+        fileTypes.add(fileType);
+
+        fileType = new FileType();
         fileType.setGroupTitle("PDF");
         fileType.setGroupIcon(R.drawable.ic_pdf);
         fileType.setGroupExtension("pdf");

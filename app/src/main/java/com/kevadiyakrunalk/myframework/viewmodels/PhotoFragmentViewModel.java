@@ -1,7 +1,9 @@
 package com.kevadiyakrunalk.myframework.viewmodels;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 
 import com.kevadiyakrunalk.commonutils.common.Logs;
 import com.kevadiyakrunalk.mvvmarchitecture.common.BaseViewModel;
+import com.kevadiyakrunalk.myframework.activities.MainActivity;
 import com.kevadiyakrunalk.rxpermissions.PermissionResult;
 import com.kevadiyakrunalk.rxpermissions.RxPermissions;
 import com.kevadiyakrunalk.rxphotopicker.CropOption;
@@ -50,8 +53,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                 .pickSingleImage(Sources.GALLERY, Transformers.URI, true, builder, new PhotoInterface<Uri>() {
                                     @Override
                                     public void onPhotoResult(Uri uri) {
-                                        logs.error("gallery", "Uri -> " + uri);
-                                        imageView.setImageURI(uri);
+                                        if(uri != Uri.EMPTY) {
+                                            logs.error("gallery", "Uri -> " + uri);
+                                            imageView.setImageURI(uri);
+                                        } else
+                                            logs.error("gallery", "Uri -> EMPTY");
                                     }
                                 });
                     }
@@ -62,8 +68,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                     .pickSingleImage(Sources.GALLERY, Transformers.URI, true, builder, new PhotoInterface<Uri>() {
                         @Override
                         public void onPhotoResult(Uri uri) {
-                            logs.error("gallery", "Uri -> " + uri);
-                            imageView.setImageURI(uri);
+                            if(uri != Uri.EMPTY) {
+                                logs.error("gallery", "Uri -> " + uri);
+                                imageView.setImageURI(uri);
+                            } else
+                                logs.error("gallery", "Uri -> EMPTY");
                         }
                     });
         }
@@ -79,8 +88,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                 .pickSingleImage(Sources.GALLERY, Transformers.BITMAP, true, new PhotoInterface<Bitmap>() {
                                     @Override
                                     public void onPhotoResult(Bitmap bitmap) {
-                                        logs.error("gallery", "Bitmap -> " + bitmap.toString());
-                                        imageView.setImageBitmap(bitmap);
+                                        if(bitmap != null) {
+                                            logs.error("gallery", "Bitmap -> " + bitmap.toString());
+                                            imageView.setImageBitmap(bitmap);
+                                        } else
+                                            logs.error("gallery", "Bitmap -> NULL");
                                     }
                                 });
                     }
@@ -91,8 +103,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                     .pickSingleImage(Sources.GALLERY, Transformers.BITMAP, true, new PhotoInterface<Bitmap>() {
                         @Override
                         public void onPhotoResult(Bitmap bitmap) {
-                            logs.error("gallery", "Bitmap -> " + bitmap.toString());
-                            imageView.setImageBitmap(bitmap);
+                            if(bitmap != null) {
+                                logs.error("gallery", "Bitmap -> " + bitmap.toString());
+                                imageView.setImageBitmap(bitmap);
+                            } else
+                                logs.error("gallery", "Bitmap -> NULL");
                         }
                     });
         }
@@ -108,8 +123,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                 .pickSingleImage(Sources.GALLERY, Transformers.FILE, true, new PhotoInterface<File>() {
                                     @Override
                                     public void onPhotoResult(File file) {
-                                        logs.error("gallery", "File -> " + file.getName());
-                                        imageView.setImageURI(Uri.parse(file.getPath()));
+                                        if(file != null) {
+                                            logs.error("gallery", "File -> " + file.getName() + " ,Size -> " + fileSize(file.length()));
+                                            imageView.setImageURI(Uri.parse(file.getPath()));
+                                        } else
+                                            logs.error("gallery", "File -> NULL");
                                     }
                                 }, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));//context.getFilesDir());
                     }
@@ -120,8 +138,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                     .pickSingleImage(Sources.GALLERY, Transformers.FILE, true, new PhotoInterface<File>() {
                         @Override
                         public void onPhotoResult(File file) {
-                            logs.error("gallery", "File -> " + file.getName());
-                            imageView.setImageURI(Uri.parse(file.getPath()));
+                            if(file != null) {
+                                logs.error("gallery", "File -> " + file.getName() + " ,Size -> " + fileSize(file.length()));
+                                imageView.setImageURI(Uri.parse(file.getPath()));
+                            } else
+                                logs.error("gallery", "File -> NULL");
                         }
                     }, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));//context.getFilesDir());
         }
@@ -137,8 +158,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                 .pickSingleImage(Sources.CAMERA, Transformers.URI, true, new PhotoInterface<Uri>() {
                                     @Override
                                     public void onPhotoResult(Uri uri) {
-                                        logs.error("camera", "Uri -> " + uri);
-                                        imageView.setImageURI(uri);
+                                        if(uri != Uri.EMPTY) {
+                                            logs.error("camera", "Uri -> " + uri);
+                                            imageView.setImageURI(uri);
+                                        } else
+                                            logs.error("camera", "Uri -> EMPTY");
                                     }
                                 });
                     }
@@ -149,8 +173,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                     .pickSingleImage(Sources.CAMERA, Transformers.URI, true, new PhotoInterface<Uri>() {
                         @Override
                         public void onPhotoResult(Uri uri) {
-                            logs.error("camera", "Uri -> " + uri);
-                            imageView.setImageURI(uri);
+                            if(uri != Uri.EMPTY) {
+                                logs.error("camera", "Uri -> " + uri);
+                                imageView.setImageURI(uri);
+                            } else
+                                logs.error("camera", "Uri -> EMPTY");
                         }
                     });
         }
@@ -166,8 +193,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                 .pickSingleImage(Sources.CAMERA, Transformers.BITMAP, true, new PhotoInterface<Bitmap>() {
                                     @Override
                                     public void onPhotoResult(Bitmap bitmap) {
-                                        logs.error("camera", "Bitmap -> " + bitmap.toString());
-                                        imageView.setImageBitmap(bitmap);
+                                        if(bitmap != null) {
+                                            logs.error("camera", "Bitmap -> " + bitmap.toString());
+                                            imageView.setImageBitmap(bitmap);
+                                        } else
+                                            logs.error("camera", "Bitmap -> NULL");
                                     }
                                 });
                     }
@@ -178,8 +208,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                     .pickSingleImage(Sources.CAMERA, Transformers.BITMAP, true, new PhotoInterface<Bitmap>() {
                         @Override
                         public void onPhotoResult(Bitmap bitmap) {
-                            logs.error("camera", "Bitmap -> " + bitmap.toString());
-                            imageView.setImageBitmap(bitmap);
+                            if(bitmap != null) {
+                                logs.error("camera", "Bitmap -> " + bitmap.toString());
+                                imageView.setImageBitmap(bitmap);
+                            } else
+                                logs.error("camera", "Bitmap -> NULL");
                         }
                     });
         }
@@ -195,8 +228,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                 .pickSingleImage(Sources.CAMERA, Transformers.FILE, true, new PhotoInterface<File>() {
                                     @Override
                                     public void onPhotoResult(File file) {
-                                        logs.error("camera", "File -> " + file.getName());
-                                        imageView.setImageURI(Uri.parse(file.getPath()));
+                                        if(file != null) {
+                                            logs.error("camera", "File -> " + file.getName() + " ,Size -> " + fileSize(file.length()));
+                                            imageView.setImageURI(Uri.parse(file.getPath()));
+                                        } else
+                                            logs.error("camera", "File -> NULL");
                                     }
                                 }, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));//context.getFilesDir());
                     }
@@ -207,8 +243,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                     .pickSingleImage(Sources.CAMERA, Transformers.FILE, true, new PhotoInterface<File>() {
                         @Override
                         public void onPhotoResult(File file) {
-                            logs.error("camera", "File -> " + file.getName());
-                            imageView.setImageURI(Uri.parse(file.getPath()));
+                            if(file != null) {
+                                logs.error("camera", "File -> " + file.getName() + " ,Size -> " + fileSize(file.length()));
+                                imageView.setImageURI(Uri.parse(file.getPath()));
+                            } else
+                                logs.error("camera", "File -> NULL");
                         }
                     }, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));//context.getFilesDir());
         }
@@ -225,7 +264,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                 @Override
                                 public void onPhotoResult(List<Uri> uri) {
                                     for (Uri uri1 : uri) {
-                                        logs.error("gallery multiple", "Uri -> " + uri1);
+                                        if(uri1 != Uri.EMPTY) {
+                                            logs.error("gallery multiple", "Uri -> " + uri1);
+                                            imageView.setImageURI(uri1);
+                                        } else
+                                            logs.error("gallery multiple", "Uri -> EMPTY");
                                     }
                                 }
                             });
@@ -237,11 +280,21 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                         @Override
                         public void onPhotoResult(List<Uri> uri) {
                             for (Uri uri1 : uri) {
-                                logs.error("gallery multiple", "Uri -> " + uri1);
+                                if(uri1 != Uri.EMPTY) {
+                                    logs.error("gallery multiple", "Uri -> " + uri1);
+                                    imageView.setImageURI(uri1);
+                                } else
+                                    logs.error("gallery multiple", "Uri -> EMPTY");
                             }
                         }
                     });
         }
+
+        /*Intent intent = new Intent();
+        intent.setType("image*//*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        ((MainActivity) context).startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);*/
     }
 
     public void onGalleryMultipleBitmap(View view) {
@@ -255,7 +308,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                     @Override
                                     public void onPhotoResult(List<Bitmap> bitmap) {
                                         for (Bitmap bitmap1 : bitmap) {
-                                            logs.error("gallery multiple", "Bitmap -> " + bitmap1.toString());
+                                            if(bitmap1 != null) {
+                                                logs.error("gallery multiple", "Bitmap -> " + bitmap1.toString());
+                                                imageView.setImageBitmap(bitmap1);
+                                            } else
+                                                logs.error("gallery multiple", "Bitmap -> NULL");
                                         }
                                     }
                                 });
@@ -268,7 +325,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                         @Override
                         public void onPhotoResult(List<Bitmap> bitmap) {
                             for (Bitmap bitmap1 : bitmap) {
-                                logs.error("gallery multiple", "Bitmap -> " + bitmap1.toString());
+                                if(bitmap1 != null) {
+                                    logs.error("gallery multiple", "Bitmap -> " + bitmap1.toString());
+                                    imageView.setImageBitmap(bitmap1);
+                                } else
+                                    logs.error("gallery multiple", "Bitmap -> NULL");
                             }
                         }
                     });
@@ -286,7 +347,11 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                                     @Override
                                     public void onPhotoResult(List<File> file) {
                                         for(File file1 : file) {
-                                            logs.error("gallery multiple", "File -> " + file1.getName());
+                                            if(file1 != null) {
+                                                logs.error("gallery multiple", "File -> " + file1.getName() + " ,Size -> " + fileSize(file1.length()));
+                                                imageView.setImageURI(Uri.parse(file1.getPath()));
+                                            } else
+                                                logs.error("gallery multiple", "File -> NULL");
                                         }
                                     }
                                 }, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));//context.getFilesDir());
@@ -299,10 +364,22 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                         @Override
                         public void onPhotoResult(List<File> file) {
                             for(File file1 : file) {
-                                logs.error("gallery multiple", "File -> " + file1.getName());
+                                if(file1 != null) {
+                                    logs.error("gallery multiple", "File -> " + file1.getName() + " ,Size -> " + fileSize(file1.length()));
+                                    imageView.setImageURI(Uri.parse(file1.getPath()));
+                                } else
+                                    logs.error("gallery multiple", "File -> NULL");
                             }
                         }
                     }, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));//context.getFilesDir());
         }
+    }
+
+    public String fileSize(long size) {
+        long kb = size / 1024;
+        if(kb >= 1024)
+            return (kb/1024) + " Mb";
+        else
+            return kb + " Kb";
     }
 }
