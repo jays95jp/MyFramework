@@ -289,12 +289,6 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                         }
                     });
         }
-
-        /*Intent intent = new Intent();
-        intent.setType("image*//*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        ((MainActivity) context).startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);*/
     }
 
     public void onGalleryMultipleBitmap(View view) {

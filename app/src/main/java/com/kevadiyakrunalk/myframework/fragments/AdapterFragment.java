@@ -143,7 +143,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                rxDataSource.updateDataSet(mData) //base items should remain the same
+                /*rxDataSource.updateDataSet(mData) //base items should remain the same
                         .flatMap(new Func1<Pair<Object, List<Object>>, Observable<Pair<Object, List<Object>>>>() {
                             @Override
                             public Observable<Pair<Object, List<Object>>> call(Pair<Object, List<Object>> objectListPair) {
@@ -174,7 +174,7 @@ public class AdapterFragment extends MvvmFragment<FragmentAdapterBinding, Adapte
                                 return flag;
                             }
                         })
-                        .updateAdapter();
+                        .updateAdapter();*/
                         /*.filter(new Func1<Object, Boolean>() {
                             @Override
                             public Boolean call(Object s) {
