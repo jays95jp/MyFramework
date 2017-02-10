@@ -188,20 +188,28 @@ public class PhotoActivity extends Activity {
                 startActivityForResult(pictureChooseIntent[0], chooseCode[0]);
                 break;
             case GALLERY:
-                pictureChooseIntent[0] = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    //pictureChooseIntent[0] = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    pictureChooseIntent[0].putExtra(Intent.EXTRA_ALLOW_MULTIPLE, getIntent().getBooleanExtra(ALLOW_MULTIPLE_IMAGES, false));
-                    pictureChooseIntent[0].addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                if(getIntent().getBooleanExtra(ALLOW_MULTIPLE_IMAGES, false)) {
+                    pictureChooseIntent[0] = new Intent();
+                    pictureChooseIntent[0].putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        pictureChooseIntent[0] = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                        pictureChooseIntent[0].addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                    } else
+                        pictureChooseIntent[0].setAction(Intent.ACTION_GET_CONTENT);
+                    pictureChooseIntent[0].addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    pictureChooseIntent[0].setType("image/*");
+                    chooseCode[0] = Constant.SELECT_PHOTO;
+                    startActivityForResult(Intent.createChooser(pictureChooseIntent[0],"Select Picture"), chooseCode[0]);
 
                 } else {
-                    //pictureChooseIntent[0] = new Intent(Intent.ACTION_GET_CONTENT);
+                    pictureChooseIntent[0] = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                        pictureChooseIntent[0].addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                    pictureChooseIntent[0].addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    pictureChooseIntent[0].setType("image/*");
+                    chooseCode[0] = Constant.SELECT_PHOTO;
+                    startActivityForResult(pictureChooseIntent[0], chooseCode[0]);
                 }
-                //pictureChooseIntent[0].putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                pictureChooseIntent[0].addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                pictureChooseIntent[0].setType("image/*");
-                chooseCode[0] = Constant.SELECT_PHOTO;
-                startActivityForResult(pictureChooseIntent[0], chooseCode[0]);
                 break;
         }
     }

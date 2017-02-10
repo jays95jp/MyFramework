@@ -1,7 +1,9 @@
 package com.kevadiyakrunalk.myframework.viewmodels;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 
 import com.kevadiyakrunalk.commonutils.common.Logs;
 import com.kevadiyakrunalk.mvvmarchitecture.common.BaseViewModel;
+import com.kevadiyakrunalk.myframework.activities.MainActivity;
 import com.kevadiyakrunalk.rxpermissions.PermissionResult;
 import com.kevadiyakrunalk.rxpermissions.RxPermissions;
 import com.kevadiyakrunalk.rxphotopicker.CropOption;
@@ -286,6 +289,12 @@ public class PhotoFragmentViewModel extends BaseViewModel {
                         }
                     });
         }
+
+        /*Intent intent = new Intent();
+        intent.setType("image*//*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        ((MainActivity) context).startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);*/
     }
 
     public void onGalleryMultipleBitmap(View view) {
