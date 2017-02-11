@@ -139,7 +139,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:rxphotopicker:1.2@aar'
+  compile 'com.kevadiyakrunalk:rxphotopicker:2.0@aar'
   compile 'com.kevadiyakrunalk:commonutils:1.0@aar'
 }
 ```
@@ -366,7 +366,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-  compile 'com.kevadiyakrunalk:recycleadapter:1.1@aar'
+  compile 'com.kevadiyakrunalk:recycleadapter:2.0@aar'
 }
 ```
 ```java
@@ -464,12 +464,12 @@ dependencies {
     compile 'com.kevadiyakrunalk:commonutils:1.0@aar' /* Common Utils */
     compile 'com.kevadiyakrunalk:customfont:1.0@aar' /* Custom font */
     compile 'com.kevadiyakrunalk:mvvmarchitecture:1.0@aar' /* MVVM Architecture */
-    compile 'com.kevadiyakrunalk:recycleadapter:1.1@aar' /* Recycleview Adapter */
+    compile 'com.kevadiyakrunalk:recycleadapter:2.0@aar' /* Recycleview Adapter */
     compile 'com.kevadiyakrunalk:rxdialog:1.0@aar' /* Alert/Prompt/Progress Dialog */
     compile 'com.kevadiyakrunalk:rxfilepicker:1.0@aar' /* File Picker */
     compile 'com.kevadiyakrunalk:rxlocation:1.1@aar' /* Location */
     compile 'com.kevadiyakrunalk:rxpermissions:1.0@aar' /* Runtime Permission */
-    compile 'com.kevadiyakrunalk:rxphotopicker:1.1@aar' /* Photo/Image Picker */
+    compile 'com.kevadiyakrunalk:rxphotopicker:2.0@aar' /* Photo/Image Picker */
     compile 'com.kevadiyakrunalk:rxpreference:1.0@aar' /* Save or Get data from preference */
     compile 'com.kevadiyakrunalk:rxvalidation:1.0@aar' /* Validation */   
 }
